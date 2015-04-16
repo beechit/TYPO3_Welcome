@@ -78,7 +78,7 @@ The structure of the backend is as follows:
 1. Available backend modules
 2. Page tree (not always visible)
 3. Content/adjust part
-4. Tools for caching/searching and user settings (since CMS 7.0)
+4. Tools for caching/searching and user settings
 
 .. image:: Images/typo3_backend.png
 
@@ -347,7 +347,7 @@ A blog item consists of a title, teaser, date and a message, where the date will
 the blog item.**
 
 Creating extensions can easily be kick started by the extension builder. The extension builder can be found at TER but
-the version compatible for CMS 7.0 is not yet released in the TER. Therefore use the following link to get it:
+the version compatible for CMS 7 is not yet released in the TER. Therefore use the following link to get it:
 https://github.com/TYPO3-extensions/extension_builder.git
 
 The manual of the extension builder can be found at:

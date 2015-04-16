@@ -1,8 +1,15 @@
 <?php
 /*
- * This source file is proprietary property of Beech Applications B.V.
- * Date: 31-03-2015 14:30
- * All code (c) Beech Applications B.V. all rights reserved
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
  */
 
 /**
