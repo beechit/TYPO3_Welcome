@@ -1,0 +1,32 @@
+{namespace em=TYPO3\CMS\Extensionmanager\ViewHelpers}
+
+<f:layout name="main"/>
+
+<f:section name="docheader-buttons">
+</f:section>
+
+<f:section name="module-headline">
+	<h1><f:translate key="distributions">Get Distributions</f:translate></h1>
+</f:section>
+
+<f:section name="Content">
+	<f:flashMessages renderMode="div" />
+	<f:if condition="{enableDistributionsView}">
+		<f:then>
+			<div class="distribution-holder">
+				<f:for each="{officialDistributions}" as="distribution">
+					<f:render partial="List/Distribution" arguments="{distribution: distribution, official: 1}" />
+				</f:for>
+				<f:for each="{communityDistributions}" as="distribution">
+					<f:render partial="List/Distribution" arguments="{distribution: distribution, official: 0}" />
+				</f:for>
+			</div>
+		</f:then>
+		<f:else>
+			<p>{f:translate(key: 'extensionList.installImpexp')}</p>
+			<f:link.action action="toggleExtensionInstallationState" controller="Action" arguments="{extensionKey: 'impexp'}" class="btn btn-default t3-button-action-installdistribution">
+				<span class="fa fa-cloud-download">&nbsp;</span><f:translate key="distribution.installImpexp">Install impexp</f:translate>
+			</f:link.action>
+		</f:else>
+	</f:if>
+</f:section>

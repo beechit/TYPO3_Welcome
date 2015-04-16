@@ -1,0 +1,66 @@
+<f:layout name="Default" />
+
+<f:section name="Content">
+	<h1>TYPO3 CMS {TYPO3Version}<br />
+		<f:translate key="LLL:EXT:lang/locallang_alt_intro.xlf:introtext" />
+	</h1>
+
+	<p class="lead">
+		<f:translate key="LLL:EXT:lang/locallang_alt_intro.xlf:introtext2" />
+	</p>
+
+	{warningMessages -> f:format.raw()}
+
+	<f:for each="{modules}" as="mainModule">
+        <h2>{mainModule.label}</h2>
+
+		<f:for each="{mainModule.subModules}" as="subModule" iteration="subModuleIterator">
+			<div class="media clearfix">
+				<a
+					href="#"
+					onclick="top.goToModule('{mainModule.name}_{subModule.name}'); return false;"
+					title="{subModule.shortDescription}"
+					class="pull-left"
+				>
+					<span class="typo3-app-icon">
+						<span>
+							<span>
+								<img src="../{subModule.icon}" alt="{subModule.label}" class="media-object" />
+							</span>
+						</span>
+					</span>
+				</a>
+
+				<div class="media-body">
+					<strong>
+						<a
+							href="#"
+							onclick="top.goToModule('{mainModule.name}_{subModule.name}'); return false;"
+							title="{subModule.shortDescription}"
+						>{subModule.label}</a>
+					</strong><br>
+
+					<f:if condition="{subModule.shortDescription}">
+						<small class="text-muted">{subModule.shortDescription}</small><br>
+					</f:if>
+
+					{subModule.longDescription -> f:format.raw()}
+				</div>
+			</div>
+
+		</f:for>
+	</f:for>
+
+	<p class="end-text text-info">
+		<em>
+			(<f:translate key="LLL:EXT:lang/locallang_alt_intro.xlf:endText" />)
+		</em>
+	</p>
+
+	<p>
+		<small>
+			{copyRightNotice -> f:format.raw()}
+		</small>
+	</p>
+
+</f:section>

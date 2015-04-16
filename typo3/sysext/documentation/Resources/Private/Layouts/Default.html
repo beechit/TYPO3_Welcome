@@ -1,0 +1,35 @@
+{namespace doc=TYPO3\CMS\Documentation\ViewHelpers}
+
+<f:be.container pageTitle="{f:translate(key: 'documentation_manager')}" enableClickMenu="false" loadPrototype="false" loadScriptaculous="false" loadExtJs="false" loadExtJsTheme="true" loadJQuery="true"
+
+	includeCssFiles="{
+		0:'{f:uri.resource(path:\'Css/main.css\')}'
+	}"
+	includeJsFiles="{
+		0:'contrib/jquery/jquery.dataTables.min.js',
+		1:'contrib/jquery/jquery.clearable.js',
+		2:'{f:uri.resource(path:\'JavaScript/main.js\')}',
+		3:'{f:uri.resource(path:\'JavaScript/configuration.js\')}'
+	}">
+
+	<div id="typo3-docheader">
+		<div class="typo3-docheader-functions">
+			<f:be.menus.actionMenu>
+				<f:be.menus.actionMenuItem label="{f:translate(key: 'showDocumentation')}" controller="Document" action="list" />
+				<doc:be.security.ifAdmin>
+					<f:be.menus.actionMenuItem label="{f:translate(key: 'downloadDocumentation')}" controller="Document" action="download" />
+				</doc:be.security.ifAdmin>
+			</f:be.menus.actionMenu>
+		</div>
+		<div class="typo3-docheader-buttons">
+			<f:render section="docheader-buttons" />
+		</div>
+	</div>
+	<div id="typo3-docbody">
+		<div id="typo3-inner-docbody" class="typo3-documentation">
+			<f:render section="module-headline" />
+			<f:flashMessages renderMode="div" />
+			<f:render section="Content" />
+		</div>
+	</div>
+</f:be.container>

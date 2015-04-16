@@ -1,0 +1,44 @@
+{namespace k=EBT\ExtensionBuilder\ViewHelpers}
+<f:comment>
+	Use the section "header" to call ViewHelpers which modify the configuration
+	of the PageRenderer, f.e. to include custom CSS or JavaScript.
+</f:comment>
+<f:render section="header" />
+<f:be.container includeCsh="false">
+	<div class="typo3-fullDoc">
+		<div id="typo3-docheader">
+			<div class="typo3-docheader-functions">
+				<div class="left">
+					<f:be.buttons.csh />
+					<f:be.menus.actionMenu>
+						<f:be.menus.actionMenuItem label="Introduction" controller="BuilderModule" action="index" />
+						<f:be.menus.actionMenuItem label="Domain Modelling" controller="BuilderModule" action="domainmodelling"/>
+					</f:be.menus.actionMenu>
+				</div>
+				<div class="right">
+					<span class="logo">Extension Builder</span>
+				</div>
+			</div>
+			<div class="typo3-docheader-buttons">
+				<div class="left">
+					<f:render section="iconButtons" />
+				</div>
+				<div class="right">
+					<a id="toggleAdvancedOptions" href="#"  accesskey="a">
+						<img src="{settings.publicResourcesPath}Icons/advanced_options.png" width="16" height="16" title="Advanced options" class="absmiddle" alt="Advanced options">
+												<span class="simpleMode">Show</span><span class="advancedMode">Hide</span> <span class="access-key">a</span>dvanced options.</a>
+					<a id="opennewwindow" href="#" target="_blank" accesskey="n">
+							<img src="{settings.publicResourcesPath}Icons/open_in_new_window.gif" width="16" height="16" title="Open in new window" class="absmiddle" alt="Open in new window">
+								Open in <span class="access-key">n</span>ew window.</a>
+					<script type="text/javascript">/*<![CDATA[*/if (window.top.location.href === window.location.href) { document.getElementById("opennewwindow").style.display = "none"; }/*]]>*/</script>
+					<f:be.buttons.shortcut />
+				</div>
+			</div>
+		</div>
+		<div id="typo3-docbody">
+			<div id="typo3-inner-docbody">
+				<f:render section="content" />
+			</div>
+		</div>
+	</div>
+</f:be.container>

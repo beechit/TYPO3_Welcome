@@ -1,0 +1,146 @@
+//
+// DocHeader
+//
+
+@docheader-text: rgb(45, 45, 45);
+@docheader-bg: linear-gradient(to bottom, rgb(235, 235, 235) 0%, rgb(205, 205, 205) 100%);
+@docheader-border: rgb(195, 195, 195);
+
+#typo3-docheader {
+	background-color: @docheader-bg;
+	background: @docheader-bg;
+
+	img,
+	input {
+		cursor: pointer;
+	}
+
+	.t3-icon {
+		margin-bottom: 3px;
+	}
+
+	.left {
+		float: left;
+
+		//
+		// Extra margin 6px added to it-icon margin, doubled spacing = 12px
+		//
+		.buttongroup {
+			.pull-left;
+			margin-right: 6px;
+			.c-inputButton {
+				color: inherit;
+			}
+		}
+
+		select {
+			margin-right: 12px;
+		}
+		.t3-icon {
+			margin-right: 6px;
+		}
+
+	}
+
+	.right {
+		.pull-right;
+
+		.t3-icon {
+			margin-left: 6px;
+		}
+	}
+
+
+	.typo3-docheader-functions {
+		color: @docheader-text;
+		border-bottom: 1px solid @docheader-border;
+		height: 27px;
+		line-height: 27px;
+		padding: 0 24px;
+		overflow: hidden;
+
+		a {
+			color: @docheader-text;
+
+			&:hover {
+				color: #000;
+			}
+		}
+
+		//
+		// overwrite defaults from normalize.css
+		//
+		select {
+			color: @docheader-text;
+		}
+	}
+
+	.typo3-docheader-buttons {
+		color: @docheader-text;
+		border-bottom: 1px solid @docheader-border;
+		height: 22px;
+		padding: 3px 24px;
+		overflow: hidden;
+
+		a {
+			color: @docheader-text;
+
+			&:hover {
+				color: #000;
+			}
+		}
+	}
+}
+
+//
+// ExtJS Viewport
+//
+
+//
+// Collapsed tree frame is not invisible, but 5px wide.
+// If no tree frame is in use, an empty container is shown instead
+//
+
+#typo3-navigationContainer-xsplit,
+#typo3-navigationContainer-xcollapsed,
+#typo3-navigationDummy {
+	background: @body-bg url(../../Images/docheader-split-background.png) left top repeat-x;
+}
+
+//
+// ExtJS theme for PageTree
+//
+#typo3-pagetree-topPanelItems {
+	background-color: @docheader-bg;
+	background: @docheader-bg;
+
+	#typo3-pagetree-topPanel {
+		// Functions
+		.x-panel-tbar {
+			color: @docheader-text;
+			border-bottom: 1px solid @docheader-border;
+			a {
+				color: @docheader-text;
+				&:hover {
+					color: #000;
+				}
+			}
+		}
+
+		// Buttons
+		.x-panel-body {
+			color: @docheader-text;
+			border-bottom: 1px solid @docheader-border;
+			.typo3-pagetree-topPanel-button {
+				margin-top: 0;
+			}
+			a {
+				color: @docheader-text;
+				&:hover {
+					color: #000;
+				}
+			}
+		}
+	}
+
+}

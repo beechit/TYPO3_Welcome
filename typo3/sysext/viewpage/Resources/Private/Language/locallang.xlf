@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file t3:id="1415815011" source-language="en" datatype="plaintext" original="messages" date="2011-10-17T20:22:37Z" product-name="viewpage">
+		<header/>
+		<body>
+			<trans-unit id="width" xml:space="preserve">
+				<source>Width</source>
+			</trans-unit>
+			<trans-unit id="tablet" xml:space="preserve">
+				<source>Tablet</source>
+			</trans-unit>
+			<trans-unit id="mobile" xml:space="preserve">
+				<source>Mobile</source>
+			</trans-unit>
+			<trans-unit id="computer" xml:space="preserve">
+				<source>Computer</source>
+			</trans-unit>
+			<trans-unit id="customWidth" xml:space="preserve">
+				<source>Custom Size</source>
+			</trans-unit>
+			<trans-unit id="autoSize" xml:space="preserve">
+				<source>Auto Size</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

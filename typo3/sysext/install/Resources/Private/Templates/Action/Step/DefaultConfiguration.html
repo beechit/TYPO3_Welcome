@@ -1,0 +1,42 @@
+{namespace i=TYPO3\CMS\Install\ViewHelpers}
+
+<f:layout name="Step" />
+
+<f:section name="Content">
+	<f:render partial="Action/Step/StepCounter.html" arguments="{steps: steps}" />
+
+	<h3>Installation done!</h3>
+
+	<p>
+		The only thing remaining is to set some configuration values based on your
+		system environment, which happens automatically in this step.
+		Then you will be redirected to your TYPO3 CMS backend, ready for you to log in
+		with the user you just created.
+	</p>
+
+	<h4>Want a pre-configured site?</h4>
+	<p>
+		You now have an empty installation. If you want a pre-configured site, there are
+		distributions on the web which can be installed via the Extension Manager.
+		If you check the option below, the list of distributions will be fetched and you will
+		be able to choose one directly.
+		<strong>Please note: This may take some time after login.</strong>
+	</p>
+
+	<form method="post">
+		<f:render partial="Action/Common/HiddenFormFields" arguments="{_all}" />
+		<input type="hidden" value="execute" name="install[set]" />
+		<fieldset class="t3-install-form-label-width-21 t3-install-form-label-after">
+			<ol>
+				<li>
+					<input type="checkbox" id="load-distributions" name="install[values][loaddistributions]" value="1" checked="checked" />
+					<label for="load-distributions">Yes, download the list of distributions.</label>
+				</li>
+			</ol>
+		</fieldset>
+		<hr />
+		<button class="btn btn-default" type="submit">
+			Open the backend
+		</button>
+	</form>
+</f:section>

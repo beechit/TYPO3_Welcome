@@ -1,0 +1,20 @@
+{namespace r=TYPO3\CMS\Reports\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="iconButtons">
+	<f:render partial="Menu" arguments="{menu:menu}" />
+</f:section>
+
+<f:section name="content">
+	<h1><f:translate key="title" /></h1>
+
+	<f:if condition="{error}">
+		<f:then>
+			{error}
+		</f:then>
+		<f:else>
+			<f:format.html parseFuncTSPath="">{content}</f:format.html>
+		</f:else>
+	</f:if>
+</f:section>

@@ -1,0 +1,20 @@
+/* - - - - - - - - - - - - - - - - - - - - -
+Basic styles
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+a img {
+	border: none;
+}
+
+.typo3-newRecord-treeline {
+	padding-right: 20px;
+}
+
+.typo3-newRecord-treeline img {
+	vertical-align: middle;
+}
+
+#typo3-newRecord tr {
+	line-height: 13px;
+}

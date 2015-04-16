@@ -1,0 +1,47 @@
+{namespace notes=TYPO3\CMS\SysNote\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Content">
+	<f:if condition="{notes}">
+		<h2><f:translate key="internal_note" /></h2>
+
+		<div id="typo3-dblist-sysnotes">
+			<f:for each="{notes}" as="note">
+				<div class="single-note category-{note.category}">
+					<div class="header">
+						<span class="typeicon t3-js-clickmenutrigger" data-table="sys_note" data-uid="{note.uid}" data-listframe="1"></span>
+						<span><f:translate key="author" /></span>
+						<f:if condition="{note.author.realName}">
+							<f:then>{note.author.realName}</f:then>
+							<f:else>{note.author.userName}</f:else>
+						</f:if>
+
+						&nbsp; <span>&bull;</span> &nbsp;
+
+						<span><f:translate key="date" /></span>
+						<f:format.date>{note.modificationDate}</f:format.date>
+
+						<f:if condition="{note.personal}">
+							&middot;
+							<span><f:translate key="personal" /></span>&nbsp;<f:translate key="yes" />
+						</f:if>
+
+						<div class="right icons">
+							<f:be.buttons.icon uri="{notes:deleteLink(id:note.uid)}" icon="actions-edit-delete" additionalAttributes="{onClick: 'return confirm(\'{f:translate(key: \'LLL:EXT:lang/locallang_alt_doc.xlf:deleteWarning\')}\');'}" />
+							<f:be.buttons.icon uri="{notes:editLink(id:note.uid)}" icon="actions-document-open" />
+						</div>
+					</div>
+					<div class="content">
+						<div class="title">
+							<f:if condition="{note.category}"><f:translate key="category.{note.category}" />:</f:if>
+							{note.subject}
+						</div>
+						<f:format.nl2br>{note.message}</f:format.nl2br>
+					</div>
+				</div>
+			</f:for>
+		</div>
+
+	</f:if>
+</f:section>

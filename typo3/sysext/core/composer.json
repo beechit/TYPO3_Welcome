@@ -1,0 +1,37 @@
+{
+	"name": "typo3/cms-core",
+	"type": "typo3-cms-framework",
+	"description": "TYPO3 Core",
+	"homepage": "http://typo3.org",
+	"license": ["GPL-2.0+"],
+	"version": "7.1.0",
+
+	"require": {
+		"php" : ">=5.5.0"
+	},
+	"replace": {
+		"core": "*"
+	},
+	"extra": {
+		"typo3/cms": {
+			"Package": {
+				"protected": true,
+				"partOfFactoryDefault": true,
+				"partOfMinimalUsableSystem": true
+			}
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"TYPO3\\CMS\\Core\\": "Classes/"
+		},
+		"psr-0": {
+			"TYPO3\\Flow\\": "Resources/PHP/TYPO3.Flow/Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"TYPO3\\CMS\\Core\\Tests\\": "Tests/"
+		}
+	}
+}
