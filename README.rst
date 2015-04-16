@@ -35,42 +35,19 @@ Installing instruction for TYPO3 CMS and introduction package:
 The official installing instructions of TYPO3 and the needed requirements can be found at :
 https://github.com/TYPO3/TYPO3.CMS/blob/TYPO3_7-0/INSTALL.md
 
-In this section it will be *shortly* explained how it can be set up on your machine.
+For the workshop TYPO3 can be installed by cloning this repository in your webroot of your webserver.
 
-Get the desired TYPO3 distribution you want to install.
 
-For systems where symlinks are possible:
-----------------------------------------
-
-Unzip the TYPO3 package on the desired location (usual one level up then the root dir of your virtual host)
-
-.. tip::
-	use the following commands to get the TYPO3 7 distribution, unzip it and create the Web root (
-
-Create the following symlinks to typo3 files and copy .htaccess::
-
-	ln -s ../typo3_src-7.1.0 typo3_src
-	ln -s typo3_src/index.php index.php
-	ln -s typo3_src/typo3 typo3
-	cp typo3_src/_.htaccess .htaccess
-
-For systems without symlinks:
------------------------------
-
-Copy/unzip the typo3 folder in your web root. (updating typo3 is probably harder).
-
-Rename the _.htaccess to .htaccess
 
 Getting TYPO3 and the introduction package up and running
 ---------------------------------------------------------
 
 The next step is to visit your web server by the browser and follow the on-screen steps to setup your installation.
 
-In the last step of this documentation check the mark 'Get/open the online distributions' as this will take you to the
-extension manager to get the bootstrap package. (Would you have missed this you can go in the backend, when you're logged
-in, to the extension/ extensionsmanager and select 'Get predefined distributions'.
+In the last step of this documentation uncheck the mark 'Get/open the online distributions'. (The extensions needed for the workshop are already included). 
+After this step you will be redirected to the login and after login you need to go to 'Extensions' and search for the extension 'introduction package'and install this.
 
-Install the official introduction package (bootstrap_package) and you will have you're first TYPO3 website running!
+You now will have you're first TYPO3 website running!
 
 ======================================================================
 TYPO3 basics / common practises / structure of your TYPO3 installation
@@ -103,8 +80,7 @@ The structure of the backend is as follows:
 3. Content/adjust part
 4. Tools for caching/searching and user settings (since CMS 7.0)
 
-//present image
-
+.. image:: Images/typo3_backend.png
 
 
 Some familiar troubleshooting/experiences that are nice to know
@@ -134,8 +110,12 @@ and add your own logic to it in here.
 Personalize the introduction package
 ====================================
 
-Personalizing of the introduction package is recommended to do this in an custom extension. To create a simple extension
-create a folder 'site_template' and create a file ext_emconf.php (required for TYPO3 to recognize extension) ::
+Create a custom extension to adjust the introduction package:
+-------------------------------------------------------------
+
+Personalizing of the introduction package is recommended to do this in an custom extension. In the workshop the following steps of this section are 
+already done, however for using this documentation as a resource the following explains the steps needs to be done to reproduce: 
+To create a simple extension create a folder 'site_template' and create a file ext_emconf.php (required for TYPO3 to recognize extension) ::
 
 	<?php
 
@@ -180,9 +160,12 @@ Adjust the logo of the  introduction package
 
 In the introduction package the logo is set in typoScript, to override those settings we add our own typoScript.
 
-Create the folder Configuration/TypoScript in your extension folder (common structure for TypoScript).
+Create the following files in your extension folder (common structure for TypoScript).
 
-Add two TypoScript files; setup.txt & constants.txt.
+Add two TypoScript files::
+
+	Configuration/TypoScript/setup.txt
+	Configuration/TypoScript/constants.txt.
 
 Create the configuration that your typoScript can be added to your website template. This is done by creating the file
 ext_tables.php in your extension folder (automatically loaded by TYPO3). This file contains the following code what actually
@@ -194,7 +177,7 @@ includes all files in the Configuration/TypoScript folder.::
 		'Site template (after bootstrap package)'
 	);
 
-Include the setting to your website template in the backend (needs clear of the cache). This can be done by:
+Include the setting to the introduction website template in the backend (needs clear of the cache). This can be done by:
 
 - Select templates in modules
 - Select rootpage
@@ -205,8 +188,8 @@ Include the setting to your website template in the backend (needs clear of the 
 - Save changes
 
 .. note::
-	In the 'info/modify' -> 'Edit the whole template record' TypoScript could be overwritten in the fields 'settings' or 'constants'.
-	The values can be deleted because we are going to set this in our site_template.
+	**In the 'info/modify' -> 'Edit the whole template record' TypoScript could be overwritten in the fields 'settings' or 'constants'.
+	The values can be deleted because we are going to set this in our site_template.**
 
 At this point the TypoScript files are loaded and we can adjust the settings to use our own logo instead.
 
@@ -267,19 +250,19 @@ When the extension is installed there are a few configuration steps required to 
 Create a folder in your pagetree and select news in the field 'use as a container'.
 
 .. note::
-	The creation of the folder is not a recommendation, you can add news item(s) to normal pages but this is unorganized!
+	**The creation of the folder is not a recommendation, you can add news item(s) to normal pages but this is unorganized!**
 
 Create a (few) news items in this folder.
 
 .. note::
-	Select the list module and you folder and press 'create record' in the content view.
+	**Select the list module and you folder and press 'create record' in the content view.**
 
 Create two pages in the page tree; one for the list-view and one for the detail-view.
 
 .. tip::
-	The detail-view can be hide in the menus because user are redirect from the list-view and accessing this page will
+	**The detail-view can be hide in the menus because user are redirect from the list-view and accessing this page will
 	result in an error because the page does not know what to show.
-	*(You can hide the detail view in the edit page mode.)*
+	*(You can hide the detail view in the edit page mode.)* **
 
 Presenting the list of news items is done by adding and configuring the news plugin on the created page. The plugin can be
 added in the page module of you page and press "add content". In the tab plugins you will find the news system and by
@@ -293,7 +276,7 @@ The configuration of this plugin are:
 * Save your changes
 
 .. note::
-	These configuration can be added by editing your plugin visible in the page/list module
+	**These configuration can be added by editing your plugin visible in the page/list module**
 
 Presenting the detail of a news items is done by adding another news plugin to your detail page and configure the
 starting point to the same folder as previous and selecting 'detail-page' in the field 'what to display'.
@@ -335,13 +318,13 @@ The TypoScript to inform TYPO3 to use our templates the following has to be adde
 	}
 
 .. note::
-	Better practise is to created an folder 'Lib' in the TypoScript folder and create a file for every extension you
+	**Better practise is to created an folder 'Lib' in the TypoScript folder and create a file for every extension you
 	change the settings for. To let TYPO3 use all the contents of the folder add the following line to your setup.txt::
 
 		# Lib
 		<INCLUDE_TYPOSCRIPT: source="DIR:EXT:site_template/Configuration/TypoScript/Lib/">
 
-	This keeps more structure of your extension and is more maintainable!
+	This keeps more structure of your extension and is more maintainable!**
 
 Create the corresponding folders in your extension.
 
@@ -351,8 +334,8 @@ changes to it.
 After clearing the cache you can see the made changes on your website.
 
 .. note::
-	When no changes are visible, make sure that the path AND filename relative to the given rootPaths are the same, else
-	the template of news is taken.
+	**When no changes are visible, make sure that the path AND filename relative to the given rootPaths are the same, else
+	the template of news is taken.**
 
 Create your first custom extension
 ----------------------------------
@@ -417,8 +400,8 @@ Resources/private/Partials/Blog/FormFields.html the following has to be removed:
 	<f:form.textfield property="date"  value="{blog.date->f:format.date()}" /><br />
 
 .. note::
-	The following steps assume that you have already done/read the section about adding the news system, due the fact
-	that some steps are already explained over there.
+	**The following steps assume that you have already done/read the section about adding the news system, due the fact
+	that some steps are already explained over there.**
 
 If this is all setup you have to create a folder/storage for the blog items and create a page containing your plugin.
 
