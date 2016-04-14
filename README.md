@@ -152,7 +152,7 @@ Commonly used directory structure for an extension
 │   ├── Configuration
 │   │   ├── TCA (Table Configuration Array)( Object mapping between DB and model) (also config for the BE lists /edits)
 │   │   ├── TypoScript
-│   │   │   ├── [OPTIONAL] Other dirs e.g. BeLayouts
+│   │   │   ├── [OPTIONAL] Other dirs e.g.
 │   │   │   ├── constants.txt (typoscript constants)
 │   │   │   ├── setup.txt (typoscript setup (includes the other files in the "other dirs")
 │   ├── Resources
@@ -274,6 +274,65 @@ Second step is to configure/setup TYPO3 to include this file at every page. In t
 	page.includeCSS.all = EXT:site_template/Resources/Public/Css/main.css
 
 After clearing the cache, your menu bar has an economical greenish background color.
+
+Adjust templates
+----------------
+
+At this point you should be able to adjust the css/javascript of the website, next step is to adjust and create templates.
+
+In very short TYPO3 uses the following three parts
+
+* Templates
+* Layouts
+* Partials
+
+Currently adjusting the templates of the bootstrap_package is already prepared by the bootstrap_package to define constants were TYPO3 can look for templates, if no templates are found matching the template name it fall backs to the default template(s) of the bootstrap_package. The following constants can be added to your `constants.txt` to provide the directory TYPO3 needs to look in our site_template.
+
+    page {
+        fluidtemplate {
+    		# cat=Default Site Configuration (Beech.it site_template); type=string; label=Layout Root Path: Path to layouts
+    		layoutRootPath = EXT:site_template/Resources/Private/Layouts
+    		# cat=Default Site Configuration (Beech.it site_template); type=string; label=Partial Root Path: Path to partials
+    		partialRootPath = EXT:site_template/Resources/Private/Partials
+    		# cat=Default Site Configuration (Beech.it site_template); type=string; label=Template Root Path: Path to templates
+    		templateRootPath = EXT:site_template/Resources/Private/Templates
+    	}
+    }
+
+After this you can copy one of the templates of the bootstrap_package to your own directories and modify the content.
+
+**Trouble shooting** 
+
+* Template file name identical to bootstrap_package?
+* Correct paths?
+* Cache flushed?
+* TypoScript constants not overwritten (see Template object browser)?
+
+Create own templates
+--------------------
+
+*Requirements: The constants of the fluidtemplate are set in section 'adjust templates'*
+
+Creating own templates need a BE configuration for the editor to have a visual overview were the content will be placed in the FE. The configuration of these template will be separated in different files to avoid a very large file and losing structure. Therefore first create a folder (e.g.`Configuration/BackendLayouts/`) which is going to contain a different file for every template you are going to create.
+
+Create a file `Configuration/TsConfig/Page/config.ts` which tells TYPO3 to include and read every file in the created directories (in the future this file will also include others files as well and it is your 'startpoint' to your page TsConfig).
+
+The following configuration should inform TYPO3 to include all files in the created BackendLayouts directory:
+
+    <INCLUDE_TYPOSCRIPT: source="DIR:EXT:site_template/Configuration/BackendLayouts" extensions="ts">
+
+Or if just wanting to include one file: 
+
+    <INCLUDE_TYPOSCRIPT: source="FILE:EXT:site_template/Configuration/BackendLayouts/mytemplate.ts">
+    
+Tell TYPO3 to automatically load the  created `Configuration/TsConfig/Page/config.ts` (which implicit loads the 'BackendLayouts' again) by adding the following into `ext_tables.php`.
+
+    // Add page TSConfig
+    $pageTsConfig = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl(
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TsConfig/Page/config.ts');
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig($pageTsConfig);
+
+//TODO Document about BackendLayouts structure
 
 Add news extension to your website
 ==================================
