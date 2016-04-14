@@ -9,7 +9,6 @@ Main keypoints of this workshop are:
 * Adding a news systems to your website https://github.com/TYPO3-extensions/news
 * Creating a custom 'Blog' extension
 
-=========================
 TYPO3 System requirements
 =========================
 
@@ -19,7 +18,6 @@ regarding these requirements see the [INSTALL](https://github.com/TYPO3/TYPO3.CM
 Using the Database Abstraction Layer (DBAL) allows one to use TYPO3 with other
 Database Management Systems, like PostgreSQL, Oracle and MSSQL.
 
-============================
 Installing TYPO3 by composer
 ============================
 
@@ -53,7 +51,6 @@ Visit the website again in the browser and walkthrough the onscreen steps in sho
 5. Optionally select a preconfigured website
   - For this workshop we select 'Do nothing, just get me to the Backend' because we install the distribution by composer.
 
-===========================================================
 Installing the TYPO3 introduction package / other extension
 ===========================================================
 
@@ -67,7 +64,6 @@ TYPO3 automatically places this extension in the correct extension directory ('w
 
 Last step is to active the extension (in this case the introduction package) in the Backend (BE) extension manager. When you now visit the website you will have you're first TYPO3 website running!
 
-======================================================================
 TYPO3 basics / common practises / structure of your TYPO3 installation
 ======================================================================
 
@@ -122,9 +118,69 @@ Here are a list of common problems I experienced/experiencing during developing 
 Minimal overview of a website structure in dirs
 -----------------------------------------------
 
-TODO
-extension directory ('typo3conf/ext/*')
+Directory of TYPO3 composer based:
+```
+├── vendor
+├── web
+│   ├── fileadmin
+│   ├── typo3 (symlink to the vendor typo3 folder)
+│   ├── typoconf
+│   │   ├── ext (The extension directory)
+│   │   ├── l10n (the language files downloaded for the BE)
+│   │   ├── LocalConfiguration.php (Local configuration of the website e.g. database access)
+│   │   ├── PackageStates.php (keeps track of the package/extension states (written by the extensionmanager))
+│   ├── typo3temp (cached files)
+│   ├── uploads (user uploads)
+│   ├── .htaccess
+│   ├── index.php (symlink to the vendor typo3 index which is your website startpoint)
+├── composer.json
+├── composer.lock
 
+```
+
+Commonly used directory structure for an extension
+
+```
+├── site_template
+│   ├── Classes
+│   │   ├── Command (command controllers that can invoke terminal commands)
+│   │   ├── Controller (controllers for the FE/BE)
+│   │   ├── Domain
+│   │   │   ├── Model (Domain model objects)
+│   │   │   ├── Repository (Repositories to the database (ORM mappers))
+│   │   ├── ViewHelpers (Classes to help within the view)
+│   ├── Configuration
+│   │   ├── TCA (Table Configuration Array)( Object mapping between DB and model) (also config for the BE lists /edits)
+│   │   ├── TypoScript
+│   │   │   ├── [OPTIONAL] Other dirs e.g. BeLayouts
+│   │   │   ├── constants.txt (typoscript constants)
+│   │   │   ├── setup.txt (typoscript setup (includes the other files in the "other dirs")
+│   ├── Resources
+│   │   ├── Private
+│   │   │   ├── Ext
+│   │   │   │   ├── News
+│   │   │   │   │   ├── Layouts
+│   │   │   │   │   ├── Partials
+│   │   │   │   │   ├── Templates
+│   │   │   ├── Language (contains all languages and translations)
+│   │   │   ├── [OPTIONAL] Less
+│   │   │   ├── Layouts (The fluid layouts)
+│   │   │   ├── Partials (The fluid partials)
+│   │   │   ├── Templates (the fluid templates)
+│   │   │   ├── .htaccess
+│   │   ├── Public
+│   │   │   ├── Css 
+│   │   │   ├── Icons
+│   │   │   ├── Images
+│   │   │   ├── Fonts
+│   │   │   ├── Javascript
+│   ├── ext_icon.png
+│   ├── ext_emconf.php
+│   ├── ext_localconf.php
+│   ├── ext_tables.php
+│   ├── ext_tables.sql
+
+```
 
 ====================================
 Personalize the introduction package
@@ -143,72 +199,62 @@ The personalization of the website / introduction package will be done in a own 
 * ext_emconf.php
 
    This file is needed to recognize and activate your extension in the extensionmanager.
-   Use the file [ext_emconf.php] (/Files/ext_emconf.php)
+   See the file [ext_emconf.php] (/Files/ext_emconf.php)
    
-* ext_icon.png (16px*16px)
+* ext_icon.png (16px*16px) [ext_icon.png] (/Files/ext_icon.png)
 
 If you go to the extension manager in the backend you will see your extension and can activate your extension.
 
 Adjust the logo of the  introduction package
 --------------------------------------------
 
-In the introduction package the logo is set in typoScript, to override those settings we add our own typoScript.
+In the introduction pacakge the logo is made configurable by TypoScript, to adjust this logo and logo properties (height/width/alt) we need to override the constants so that the correct file to our logo is used. If you look into the `constants.txt` of the extension bootstrap package you see the following information :
 
-Create the following files in your extension folder (common structure for TypoScript).
+    page {
+        logo {
+            # cat=bootstrap package: basic/110/100; type=string; label=Logo: Leave blank to use website title from template instead
+            file = EXT:bootstrap_package/Resources/Public/Images/BootstrapPackage.png
+            # cat=bootstrap package: basic/110/110; type=int+; label=Height: The image will not be resized!
+            height = 60
+            # cat=bootstrap package: basic/110/120; type=int+; label=Width: The image will not be resized!
+            width = 210
+            # cat=bootstrap package: basic/110/130; type=string; label=Alternative text: Text of the alt attribute of the logo image (default: "<website title> logo")
+            alt =
+        }
+    }
+    
+To override this create your own `setup.txt` (for later use) and `constants.txt` (see extension dir structure which directory). Copy those contents as above in the constants.txt and modify the file to the path to your own logo in the site_template extension. For example : `file = EXT:site_template/Resources/Public/Images/logo.png`. The `EXT:site_template` directs to your extension directory.
 
-Add two TypoScript files::
+The TypoScript then needs to be included in your website. This needs a certain order otherwise because we want to override the bootstrap_package constants and not let the bootstrap constants override ours. Therefore we first need to mention it as an *static template* by adding the following lines to `ext_tables.php` . 
 
-	Configuration/TypoScript/setup.txt
-	Configuration/TypoScript/constants.txt.
-
-Create the configuration that your typoScript can be added to your website template. This is done by creating the file
-ext_tables.php in your extension folder (automatically loaded by TYPO3). This file contains the following code what actually
-includes all files in the Configuration/TypoScript folder.::
-
-	/TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    /TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
 		$_EXTKEY,
 		'Configuration/TypoScript',
 		'Site template (after bootstrap package)'
 	);
 
-Include the setting to the introduction website template in the backend (needs clear of the cache). This can be done by:
-
-- Select templates in modules
-- Select rootpage
-- Select (info/modify)
+After this we can include this *static template* to our website by: the following steps
+ 
+- In the BE select Template module (BE structure 1)
+- Select rootpage in the pageTree (Be structure 2)
+- Select Info/modify (be structure 3 top left)
 - Go to 'Edit the whole template record'
 - Include your static in the tab 'includes'
 - Adjust order that the site_template comes **after** bootstrap_package
 - Save changes
+- Clear cache
 
-.. note::
-	**In the 'info/modify' -> 'Edit the whole template record' TypoScript could be overwritten in the fields 'settings' or 'constants'.
-	The values can be deleted because we are going to set this in our site_template.**
+**In the 'info/modify' -> 'Edit the whole template record' TypoScript could be overwritten in the fields 'settings' or 'constants'.
+The values can be deleted because we are going to set this in our site_template.**
 
-At this point the TypoScript files are loaded and we can adjust the settings to use our own logo instead.
+(another way to navigate to the 'Edit the whole template record is: List Module -> Select rootpage -> edit Template)
 
-The typoScript setting of the introduction package to use the logo (can be found by looking into the code OR in the
-Template Object browser of the rootpage) is the following::
+The website logo should have been updated now.
 
-	page.logo.file = EXT:bootstrap_package/Resources/Public/Images/BootstrapPackage.png
+####Verify correct override of the TypoScript constant
 
-The one thing we need to do is to override to use the path to the logo that we add to our site_template::
-
-	page.logo.file = EXT:site_template/Resources/Public/Images/WelcomeLogo.png
-
-Additionally override also the height and width::
-
-	page {
-		logo {
-			file = EXT:site_template/Resources/Public/Images/WelcomeLogo.png
-			height = 60
-			width = 210
-		}
-	}
-
-At last we need to add the WelcomeLogo.png to the folder Resources/Public/Images (common practise/structure to keep the resources).
-
-When you flush the caches and reload the website your logo should be visible.
+When you navigate to the Template module, select your root page in the pagetree (BE structure 2) and go to the Select option
+'TypoScript Object browser' you can check under constants which settings are used.
 
 Adjust the colors/css
 ---------------------
@@ -216,61 +262,52 @@ Adjust the colors/css
 The default color scheme / css styling is perhaps not as desired. To adjust this in TYPO3 you can add your own css styles.
 
 First step is to create an css file to adjust the color of the menu bar to the economical green color. This file is called
-main.css and is located at Resources/Public/Css. Content of this file to change the menubar to green is::
+main.css and is located at Resources/Public/Css. Content of this file to change the menubar to green is:
 
 	.navbar{
 		background-color: green;
 	}
 
-Second step is to configure/setup TYPO3 to include this file at every page. In the created setup.txt file you have to
+Second step is to configure/setup TYPO3 to include this file at every page. In the created `setup.txt` file you have to
  add the following line to include your main.css file.
 
 	page.includeCSS.all = EXT:site_template/Resources/Public/Css/main.css
 
 After clearing the cache, your menu bar has an economical greenish background color.
 
-Adding some news to the website
--------------------------------
+Add news extension to your website
+==================================
 
 One commonly used functionality of a website is presenting some news/blog/information presented in a list with a detail view.
 In TYPO3 the extension 'news' offers the functionality to present this. In this section it will be explained how to add
 this to your website, and how to adjust the view of this.
 
-The news extension can be downloaded at http://typo3.org/extensions/repository/view/news and installed by the extension manager.
-Other option is to search for this extension manager (select option 'get extensions') and install it from here.
+Installation of news can be done like the introduction package, in short:
 
-When the extension is installed there are a few configuration steps required to show news on your website.
+* Run composer require `composer require typo3-ter/news`
+* Activate the extension in the extensionmanager module
 
-Create a folder in your pagetree and select news in the field 'use as a container'.
+When the extension is installed a plugin can be added to a certain page to show all news records of a storage.
+The storage can be the page were the plugin is listed, but it is *recommended* to use a folder/storage to keep your website
+a structured. The setup of news could be done for example by:
 
-.. note::
-	**The creation of the folder is not a recommendation, you can add news item(s) to normal pages but this is unorganized!**
+* Create a new folder/storage in the pagetree
+* Edit the folder and look for the field 'use as a container' and select 'news'.
+* Create a few news items in this folder (List module, add item -> add news)
+* Create two pages in the pagetree  for example 'news' and 'news-detail'
+ 
+**The detail-view can be hide in the menus because user are redirect from the list-view and accessing this page will result in an error because the page does not know what to show. *(You can hide the detail view in the edit page mode.)***
 
-Create a (few) news items in this folder.
-
-.. note::
-	**Select the list module and you folder and press 'create record' in the content view.**
-
-Create two pages in the page tree; one for the list-view and one for the detail-view.
-
-.. tip::
-	**The detail-view can be hide in the menus because user are redirect from the list-view and accessing this page will
-	result in an error because the page does not know what to show.
-	*(You can hide the detail view in the edit page mode.)* **
-
-Presenting the list of news items is done by adding and configuring the news plugin on the created page. The plugin can be
-added in the page module of you page and press "add content". In the tab plugins you will find the news system and by
-selecting this you wil be redirected to the configuration.
-
-The configuration of this plugin are:
-
-* Configure what to display: *select 'listview (without overloading detail view)*
-* Configure where your news items are stored: *Enter/search for your folder/container in the field 'select startingpoint'*
-* Configure where to redirect to for an detail page of the news items: *Enter/search for your detail page at the field 'detail pageId'*
-* Save your changes
-
-.. note::
-	**These configuration can be added by editing your plugin visible in the page/list module**
+* Create a plugin on the created news page in the pageview where you want to show the news.
+   * Select page module
+   * Select the desired page, in this case 'news'
+   * Add content on the desired place 'Add content'
+   * Find and select 'news system' and go the plugin settings
+* Configure the plugin as followed:
+   * Configure what to display: *select 'listview (without overloading detail view)*
+   * Configure where your news items are stored: *Enter/search for your folder/container in the field 'select startingpoint'*
+   * Configure where to redirect to for an detail page of the news items: *Enter/search for your detail page at the field 'detail pageId'*
+   * Save your changes
 
 Presenting the detail of a news items is done by adding another news plugin to your detail page and configure the
 starting point to the same folder as previous and selecting 'detail-page' in the field 'what to display'.
@@ -286,15 +323,12 @@ Adjusting the view(s) of the news extension
 After you installed the news extension you probably also want to adjust the view of the news list/ detail-page to your
 needs. To do this a few steps are needed and you can adjust the templates of news in the site_template.
 
-In adjusting the logo, the typoScript is already loaded and we only have to configure the TypoScript to let TYPO3 know
-to use your created templates, instead of the templates of news. (If you're template(s) are not found, TYPO3 falls back
-to the template(s) of news.
+Adjusting the view is own extension is mentioning TYPO3 to first look in your extension to the news templates. If the template is found here this template is used otherwise the template of news is found. (are none of the templates are found you get an exception).
 
-The TypoScript to inform TYPO3 to use our templates the following has to be added to your setup.txt
+At this point you should already have added the typoscript to your website in the part were you adjusted the logo, if you skipped this have a look in that section.
 
-.. code:: php
+The TypoScript to inform TYPO3 to look for our own templates add the following to the `setup.txt`
 
-	#overwride the news template:
 	plugin.tx_news {
 		view {
 			templateRootPaths {
@@ -311,25 +345,14 @@ The TypoScript to inform TYPO3 to use our templates the following has to be adde
 		}
 	}
 
-.. note::
-	**Better practise is to created an folder 'Lib' in the TypoScript folder and create a file for every extension you
-	change the settings for. To let TYPO3 use all the contents of the folder add the following line to your setup.txt::
+*Better practise is to created an folder 'Lib' in the TypoScript folder and create a file for every extension you change the settings for (just to be organized). Move the settings of news to for example the file `Configuration/TypoScript/Lib/news.ts` and include all files in the Lib directory in your setup:*
 
-		# Lib
-		<INCLUDE_TYPOSCRIPT: source="DIR:EXT:site_template/Configuration/TypoScript/Lib/">
+    # Lib
+    <INCLUDE_TYPOSCRIPT: source="DIR:EXT:site_template/Configuration/TypoScript/Lib/">
 
-	This keeps more structure of your extension and is more maintainable!**
+Adjusting the template is now a matter of creating the same file (or copying the original) in the mentioned paths above.
 
-Create the corresponding folders in your extension.
-
-Adjusting a template requires only to copy the file (and structure from the rootPath e.g. News/detail.html) and making
-changes to it.
-
-After clearing the cache you can see the made changes on your website.
-
-.. note::
-	**When no changes are visible, make sure that the path AND filename relative to the given rootPaths are the same, else
-	the template of news is taken.**
+*When no changes are visible, make sure that the path AND filename relative to the given rootPaths are the same, else the template of news is taken. (you can make a small adjustment in the news template to check if the news template is still used)*
 
 Create your first custom extension
 ----------------------------------
