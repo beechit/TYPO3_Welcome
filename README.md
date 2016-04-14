@@ -1,53 +1,71 @@
-=========================================
-Install a local webserver on your machine
-=========================================
+Welcome to TYPO3 - TYPO3camp Venlo
+==================================
 
-TYPO3 will run on a webserver and to program/experiment with TYPO3 you can install this on your machine by the following
-instruction for your operating system.
+This repository is used for the workshop 'Introduction building a website TYPO3' at http://www.typo3campvenlo.nl
+Main keypoints of this workshop are:
+* Installing TYPO3 by composer
+* Installing the TYPO3 introduction package https://typo3.org/extensions/repository/view/introduction
+* Adjusting the introduction package styling to your own
+* Adding a news systems to your website https://github.com/TYPO3-extensions/news
+* Creating a custom 'Blog' extension
 
-Windows
--------
+=========================
+TYPO3 System requirements
+=========================
 
-Windows users can install a local webserver WAMP (Windows, Apache, MySql, Php) by downloading and installing the
-WAMPserver. This application can be downloaded at :
+TYPO3 is based upon PHP and uses a MySQL database. For more information
+regarding these requirements see the [INSTALL](https://github.com/TYPO3/TYPO3.CMS/blob/master/INSTALL.md) file.
 
-http://www.wampserver.com/en/#download-wrapper
+Using the Database Abstraction Layer (DBAL) allows one to use TYPO3 with other
+Database Management Systems, like PostgreSQL, Oracle and MSSQL.
 
-Mac OS x:
----------
+============================
+Installing TYPO3 by composer
+============================
 
-Macintosh users can install MAMP application. Download link:
+Installation of TYPO3 can easily done by [composer][]. A quick way to install TYPO3 can be used by create a project with
+the TYPO3 Base distribution:
 
-https://www.mamp.info/en/downloads/
+    composer create-project typo3/cms-base-distribution projectname
 
-Ubuntu
-------
+More information about how to install TYPO3 by composer can be found at https://composer.typo3.org
 
-Ubuntu users can install LAMP on their machine by installing the following packages::
+[composer]: https://getcomposer.org/ "The PHP package manager"
 
-	sudo apt-get install apache2 php5 libapache2-mod-php5 curl php5-ldap php5-gd php5-curl php5-mysql mysql-server php5-xdebug dnsmasq python-setuptools tree mc php-pear phpmyadmin
+Setting up the TYPO3 website
+----------------------------
 
+The installation of TYPO3 succeeded and now it is time to setup/configure TYPO3. TYPO3 is shipped with a setup tool which performs the necessary steps to full fill the configuration. If you visit your installation now in the browser you see a message thanking you for downloading TYPO3. In here it will also be mentioned to create a file 'FIRST_INSTALL' to continue.
 
-==============================================================
-Installing instruction for TYPO3 CMS and introduction package:
-==============================================================
+Create a file in your webdir of your installationm on the terminal hit the following command:
 
-The official installing instructions of TYPO3 and the needed requirements can be found at :
-https://github.com/TYPO3/TYPO3.CMS/blob/TYPO3_7-0/INSTALL.md
+    cd web; touch FIRST_INSTALL;
 
-For the workshop TYPO3 can be installed by cloning this repository in your webroot of your webserver.
+Visit the website again in the browser and walkthrough the onscreen steps in short:
 
+1. System environment check
+  Fix corresponding errors and continue
+2. Database credentials
+  - Create your database in phpmyadmin and make sure you database collation is set on 'utf8_general_ci'
+  - Enter the credentials
+3. Select your created database
+4. Create user and import data
+5. Optionally select a preconfigured website
+  - For this workshop we select 'Do nothing, just get me to the Backend' because we install the distribution by composer.
 
+===========================================================
+Installing the TYPO3 introduction package / other extension
+===========================================================
 
-Getting TYPO3 and the introduction package up and running
----------------------------------------------------------
+When visiting your website by the url gives you the error 'Service unavailable (503) - No pages are found on the rootlevel'. This is normal because we don't have installed the introduction package neither we have setup a single page we could view. When selecting the option 'Create a empty page' in step 5 of the configuration a single page should have be shown.
+The introduction package we are going to install is an TYPO3 extension which we add to our installation. TYPO3 offers a lot of extensions you can see at TYPO3 Extension Repository (TER) at https://typo3.org/extensions/repository/ .
+To install a extension just require the extension in your main composer by the followed command  (installing the introduction package):
 
-The next step is to visit your web server by the browser and follow the on-screen steps to setup your installation.
+    composer require typo3-ter/introduction
 
-In the last step of this documentation uncheck the mark 'Get/open the online distributions'. (The extensions needed for the workshop are already included). 
-After this step you will be redirected to the login and after login you need to go to 'Extensions' and search for the extension 'introduction package'and install this.
+TYPO3 automatically places this extension in the correct extension directory ('web/typo3conf/ext/') were all third party and own extension will be. (When using a NOT composer based installation you can either download the files and place this into this directory OR use the Backend extensionmanager to download an extension from TER)
 
-You now will have you're first TYPO3 website running!
+Last step is to active the extension (in this case the introduction package) in the Backend (BE) extension manager. When you now visit the website you will have you're first TYPO3 website running!
 
 ======================================================================
 TYPO3 basics / common practises / structure of your TYPO3 installation
@@ -68,90 +86,66 @@ pid
 	Parent identifier of the current page/item/object
 TER
 	The **T** YPO3 **E** xtension **R** epository which contains over 6000+ already available extensions free to use!
+BE
+    TYPO3 Backend
+FE
+    TYPO3 Frontend / your website
 
-Structure of the backend
-------------------------
+Structure of the BE
+-------------------
 
-After installing the introduction package and logging in (*yourproject.typo3.local***/typo3**) you are in the backend of TYPO3.
-The structure of the backend is as follows:
+The structure of the BE (after login at (*www.yourwebsite.com/***/typo3**)) is as follows:
 
 1. Available backend modules
-2. Page tree (not always visible)
+   - The page and list module you are going to use the most to control the content.
+   - The template/extensions/install/configuration is mostly used to configure/control/develop/debug your website
+2. Page tree (only visible in module under the category 'Web')
+   - The different pages and folders/storages containing the content of your website
 3. Content/adjust part
-4. Tools for caching/searching and user settings
+4. Tools for caching/searching and to adjust user settings
 
-.. image:: Images/typo3_backend.png
+![TYPO3 Backend structure] (Images/typo3_backend.png)
 
 
-Some familiar troubleshooting/experiences that are nice to know
----------------------------------------------------------------
+Troubleshooting / tips
+----------------------
 
-Some of the problems that occurs often are because you forget some thing and below are a few question you might ask
-your self if you did this:
+Here are a list of common problems I experienced/experiencing during developing in TYPO3 and afterwards you think 'Of course!!'.
 
-- Did you cleared the caches?
-- Is the typoScript loaded in the template object browser?
-- Is the typoScript not been overwritten/ is it visible?
-- Is the database up to date (check in the install tool)
-- Is the extension active / are the dependencies to other extension set in your ext_emconf.php and are those active?
+* Did you cleared the caches?!! (clear the caches in the top right cache menu)
+* Is my setting really used and not overwritten somewhere?  In other words what is the loaded typoscript setting in the template object browser?
+* Is the typoScript not been overwritten/ is it visible?
+* Is the database up to date with my code (perform an database check in the install tool)
+* Is the extension active / are the dependencies to other extension set in your ext_emconf.php and are those active?
+* To be continued with 'AHA moments'
 
-Adjusting extensions
---------------------
+Minimal overview of a website structure in dirs
+-----------------------------------------------
 
-A general practise is to not adjust code of third party extensions (or changing own extensions for custom circumstances).
-The reason for this is that the extensions can not be updated (your changes can be overwritten). Besides it is hard to keep
-track of the adjustments and required changes if you want to use the same changes for another extension.
-
-The common practise in adjusting an extension is to create an own extension which uses the extension you want to change,
-and add your own logic to it in here.
+TODO
+extension directory ('typo3conf/ext/*')
 
 
 ====================================
 Personalize the introduction package
 ====================================
 
+Personalizing the website to your own preferences have to be done in your OWN extensions and **NOT!!** in thirds party extensions.
+ Modifying those means updating those extensions (as bugfixes) is **HARD** and your code is mixed which is a **very bad situation** to have.
+If there are bugs then clone the original repository fix it and notify *or even better provide a patch* to the original builder so that the extension can be updated and other can also have profit of your work.
+
 Create a custom extension to adjust the introduction package:
 -------------------------------------------------------------
 
-Personalizing of the introduction package is recommended to do this in an custom extension. In the workshop the following steps of this section are 
-already done, however for using this documentation as a resource the following explains the steps needs to be done to reproduce: 
-To create a simple extension create a folder 'site_template' and create a file ext_emconf.php (required for TYPO3 to recognize extension) ::
+The personalization of the website / introduction package will be done in a own TYPO3 extension 'site_template'. The minimal requirements for an own TYPO3 extension are:
 
-	<?php
+* Directory with the name of the extension (site_template)
+* ext_emconf.php
 
-	/***************************************************************
-	 * Extension Manager/Repository config file for ext "site_template".
-	 ***************************************************************/
-
-	$EM_CONF[$_EXTKEY] = array (
-		'title' => 'Site template',
-		'description' => 'The site template for our welcome to TYPO3 website',
-		'category' => 'misc',
-		'version' => '0.0.1',
-		'state' => 'stable',
-		'uploadfolder' => false,
-		'createDirs' => '',
-		'clearcacheonload' => true,in
-		'author' => 'Ruud Silvrants',
-		'author_email' => 't3ext@beech.it',
-		'author_company' => 'beech.it,
-		'constraints' =>
-		array (
-			'depends' => array (
-				'typo3' => '6.2.9-7.99.99',
-				'bootstrap_package' => '6.2.9'
-			),
-			'conflicts' => array (
-				'fluidpages' => '*',
-				'dyncss' => '*',
-			),
-			'suggests' => array (
-				'realurl' => '1.12.8-1.12.99',
-			),
-		),
-	);
-
-Add also an image called ext_icon.png (16px*16px) to the folder which will be presented in the backend.
+   This file is needed to recognize and activate your extension in the extensionmanager.
+   Use the file [ext_emconf.php] (/Files/ext_emconf.php)
+   
+* ext_icon.png (16px*16px)
 
 If you go to the extension manager in the backend you will see your extension and can activate your extension.
 
