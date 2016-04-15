@@ -74,18 +74,28 @@ Definition list
 ---------------
 Below here are some definitions that are quite often used and good to know ;)
 
-Rootpage
-	The root of your website (presented with the globe-icon). (In the IP 'Congratulations');
-uid
-	Unique identifier of a page/item/object
-pid
-	Parent identifier of the current page/item/object
-TER
-	The **T** YPO3 **E** xtension **R** epository which contains over 6000+ already available extensions free to use!
-BE
-    TYPO3 Backend
-FE
-    TYPO3 Frontend / your website
+**Rootpage**
+
+The root of your website (presented with the globe-icon). (In the IP 'Congratulations');
+	
+**uid**
+
+Unique identifier of a page/item/object
+
+**pid**
+
+Parent identifier of the current page/item/object
+
+**TER**
+
+The **T** YPO3 **E** xtension **R** epository which contains over 6000+ already available extensions free to use!
+
+**BE**
+
+TYPO3 Backend
+**FE**
+
+TYPO3 Frontend / your website
 
 Structure of the BE
 -------------------
@@ -182,7 +192,6 @@ Commonly used directory structure for an extension
 
 ```
 
-====================================
 Personalize the introduction package
 ====================================
 
@@ -227,11 +236,11 @@ To override this create your own `setup.txt` (for later use) and `constants.txt`
 
 The TypoScript then needs to be included in your website. This needs a certain order otherwise because we want to override the bootstrap_package constants and not let the bootstrap constants override ours. Therefore we first need to mention it as an *static template* by adding the following lines to `ext_tables.php` . 
 
-    /TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-		$_EXTKEY,
-		'Configuration/TypoScript',
-		'Site template (after bootstrap package)'
-	);
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+        $_EXTKEY,
+        'Configuration/TypoScript',
+        'Site template (after bootstrap package)'
+    );
 
 After this we can include this *static template* to our website by: the following steps
  
@@ -264,7 +273,7 @@ The default color scheme / css styling is perhaps not as desired. To adjust this
 First step is to create an css file to adjust the color of the menu bar to the economical green color. This file is called
 main.css and is located at Resources/Public/Css. Content of this file to change the menubar to green is:
 
-	.navbar{
+	.navbar {
 		background-color: green;
 	}
 
@@ -331,8 +340,108 @@ Tell TYPO3 to automatically load the  created `Configuration/TsConfig/Page/confi
     $pageTsConfig = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl(
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TsConfig/Page/config.ts');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig($pageTsConfig);
+    
+The configuration will now been read by TYPO3, so it's time to add the BE-layout of the template. The BE-layout you are going to create is a very simple homepage template (your web_layout) containing three rows with different columns. The template file `homepage.ts` configuration will look like the following:
 
-//TODO Document about BackendLayouts structure
+    mod {
+        web_layout {
+            BackendLayouts {
+                #The template identifier 'homepage'
+                myhomepage {
+                    # The title visible in the BE
+                    title = My Homepage
+                    # additional image for the BE
+                    icon = EXT:site_template/Resources/Public/Backend/BackendLayoutIcons/homepage.jpg
+                    config {
+                        backend_layout {
+                            # max number of columns
+                            colCount = 3
+                            # max number of rows
+                            rowCount = 2
+                            rows {
+                                1 {
+                                    columns {
+                                        1 {
+                                            name = Top row 100% width
+                                            # An unique identifier for this specific column
+                                            colPos = 3
+                                            # A additional colspan like normal table colspans
+                                            colspan = 3
+                                        }
+                                    }
+                                }
+    
+                                2 {
+                                    columns {
+                                        1 {
+                                            name = Second row 66% width
+                                            colspan = 2
+                                            colPos = 0
+                                        }
+    
+                                        2 {
+                                            name = Second row right 33% width
+                                            colPos = 2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+     
+*The third row you should be able to create yourself (tip: update the max rows number)*
+
+Using this BE-layout (don't forget clearing the cache) can be done by editing a page and adjusting the field `Backend Layout (this page only)` to your homepage (The mentioned title in the configuration). If you want to perform this recursively for the subpages also set the field `Backend Layout (subpages of this page)`).
+ 
+When going to the page module you see the created rows and columns you configured and you can place in here the desired content. Next step is to override the bootstrap_package template definition to automatically load your 'MyHomepage' html template. *The bootstrap_package currently only accepts the templates it defined in the setup.txt, and it is desired to load this dynamically*.
+Therefore you need this configuration in your `setup.txt` (OR create a file 'parser.ts' and load this file in your setup.txt as defined before). 
+
+    # This shows optional development errors
+    config {
+        contentObjectExceptionHandler = 0
+    }    
+    
+    ## Override the template parser of bootstrap_package
+    page.10.templateName >
+    page.10.templateName = TEXT
+    page.10.templateName {
+        data = levelfield:-2,backend_layout_next_level,slide
+        override.field = backend_layout
+        split {
+            token = pagets__
+            1.current = 1
+            1.wrap = |
+        }
+        case = uppercamelcase
+        if.empty.value = Default
+    }
+
+You can now visit the website but this will result in a 'Template not found exception'. The template file isn't created yet and you are going to create now with your own HTML markup. *TIP In the exception TYPO3 already mentions in which directories he searched for the expected file*. If it is correct he searches for the file `web/typo3conf/ext/site_template/Resources/Private/Templates/Myhomepage.html`.
+So create this file in the correct directory and place some html into this and revisit the website. 
+
+The page is empty, right? This comes because no layout is specified. If you wrap the content of your page to the default layout of the bootstrap package is used. The section 'Main' is used in the layout 'Default' to render that part in the layout.
+
+    <f:layout name="Default"/>
+    <f:section name="Main">
+        <h1>your html</h1>
+    </f:section>
+
+*TIP Look in the bootstrap package how the layout or templates look like, you find here good examples how a html will look like* 
+
+Were is my content? In your html you need to render the content at the places you want. The rendering of one colPos (The unique number you mentioned in the BE-layout configuration) can be done by using a TYPO3 fluid tag.
+
+    <f:section name="Main">
+       <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: '{data.uid}', colPos: '3'}"/>
+    </f:section>
+
+The full example of the MyHomepage template with bootstrap rows can be found at [Myhomepage.html] (/Files/Myhomepage.html)
+
+*(When not using any on the bootstrap_package be-layouts you can disable them in the extensionmanager -> bootstrap_package settings -> 'Disable BackendLayouts')*
+
 
 Add news extension to your website
 ==================================
@@ -422,12 +531,8 @@ On the website there should be an overview of al blog items as well an detail vi
 A blog item consists of a title, teaser, date and a message, where the date will be automatically will be set when creating
 the blog item.**
 
-Creating extensions can easily be kick started by the extension builder. The extension builder can be found at TER but
-the version compatible for CMS 7 is not yet released in the TER. Therefore use the following link to get it:
-https://github.com/TYPO3-extensions/extension_builder.git
-
-The manual of the extension builder can be found at:
-http://docs.typo3.org/typo3cms/extensions/extension_builder/
+Creating extensions can easily be kick started by the extension builder. The command to install the extension builder is `composer require typo3-ter/extensionbuilder` .The manual of the extension builder can be found at http://docs.typo3.org/typo3cms/extensions/extension_builder/. 
+*(Do not forget to activate the extension in the extensionmanager)*
 
 Once you have installed the extensionbuilder we can use the backend module to create our simple_blog extension.
 
@@ -475,9 +580,8 @@ Resources/private/Partials/Blog/FormFields.html the following has to be removed:
 	</label><br />
 	<f:form.textfield property="date"  value="{blog.date->f:format.date()}" /><br />
 
-.. note::
-	**The following steps assume that you have already done/read the section about adding the news system, due the fact
-	that some steps are already explained over there.**
+
+**The following steps assume that you have already done/read the section about adding the news system, due the fact that some steps are already explained over there.**
 
 If this is all setup you have to create a folder/storage for the blog items and create a page containing your plugin.
 
