@@ -1,0 +1,22 @@
+page {
+    logo {
+        # cat=bootstrap package: basic/110/100; type=string; label=Logo: Leave blank to use website title from template instead
+        file = EXT:site_template/Resources/Public/Images/logo.png
+        # cat=bootstrap package: basic/110/110; type=int+; label=Height: The image will not be resized!
+        height = 60
+        # cat=bootstrap package: basic/110/120; type=int+; label=Width: The image will not be resized!
+        width = 210
+        # cat=bootstrap package: basic/110/130; type=string; label=Alternative text: Text of the alt attribute of the logo image (default: "<website title> logo")
+        alt =
+    }
+
+
+    fluidtemplate {
+        # cat=Default Site Configuration (Beech.it site_template); type=string; label=Layout Root Path: Path to layouts
+        layoutRootPath = EXT:site_template/Resources/Private/Layouts
+        # cat=Default Site Configuration (Beech.it site_template); type=string; label=Partial Root Path: Path to partials
+        partialRootPath = EXT:site_template/Resources/Private/Partials
+        # cat=Default Site Configuration (Beech.it site_template); type=string; label=Template Root Path: Path to templates
+        templateRootPath = EXT:site_template/Resources/Private/Templates
+    }
+}

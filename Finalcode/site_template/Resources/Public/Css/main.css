@@ -1,0 +1,39 @@
+.navbar {
+    background-color: #eee;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #FF8600;
+}
+
+.footer-section {
+    background-color: #eee;
+    color: #111111;
+    border-top: 1px solid #ccc;
+}
+
+.footer-section a {
+    color: #111111;
+}
+
+.meta-section {
+    background-color: #ddd;
+    color: #111111;
+    border-top: 1px solid #ccc;
+}
+
+.meta-section a {
+    color: #111111;
+}
+
+.javascripttext {
+    text-align: center;
+    background-color: #FF8600;
+    color: #111111;
+    min-height: 40px;
+    padding: 10px;
+}
+.javascripttext a {
+    color: #111111;
+    font-weight: bold;
+}

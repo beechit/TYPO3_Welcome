@@ -271,7 +271,7 @@ Adjust the colors/css
 The default color scheme / css styling is perhaps not as desired. To adjust this in TYPO3 you can add your own css styles.
 
 First step is to create an css file to adjust the color of the menu bar to the economical green color. This file is called
-main.css and is located at Resources/Public/Css. Content of this file to change the menubar to green is:
+main.css and is located at Resources/Public/Css. Content of this file to change the menubar to gray is:
 
 	.navbar {
 		background-color: green;
@@ -283,6 +283,37 @@ Second step is to configure/setup TYPO3 to include this file at every page. In t
 	page.includeCSS.all = EXT:site_template/Resources/Public/Css/main.css
 
 After clearing the cache, your menu bar has an economical greenish background color.
+
+Add javascript
+--------------
+
+Adding javascript is almost similar as adjusting the color/css. You need to configure a typoscript setting to inform TYPO3 were to find your javascript and then add the javascript (`Resources/Public/Javascript/main.js`) file.
+
+    # include javascript
+    page.includeJSFooterlibs {
+        main = EXT:site_template/Resources/Public/Javascript/main.js
+        main.excludeFromConcatenation = 1
+    }
+    
+Small javascript demo 
+
+    $(document).ready(function () {
+        $('body').append('<p class="javascripttext">TYPO3 workshop added javascript at <a href="http://www.typo3campvenlo.nl/" target="_blank">TYPO3camp Venlo</a></p>');
+    });
+    
+Some small css for this to make it more visible:
+    
+    .javascripttext {
+        text-align: center;
+        background-color: #FF8600;
+        color: #111111;
+        min-height: 40px;
+        padding: 10px;
+    }
+    .javascripttext a {
+        color: #111111;
+        font-weight: bold;
+    }
 
 Adjust templates
 ----------------
@@ -592,3 +623,8 @@ At last enter/find the record of your folder/container and set this in the field
 
 When you cleared the caches and visit your website you can see your first blog system. In the backend you can also adjust
 your blog items in your container or add new ones if desired.
+
+End result of this workshop
+===========================
+
+The final code created in this workshop can be find in the directory [Finalcode] (Finalcode/).

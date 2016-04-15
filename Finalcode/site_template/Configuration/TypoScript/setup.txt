@@ -1,0 +1,28 @@
+#css stylesheets
+page.includeCSS.all = EXT:site_template/Resources/Public/Css/main.css
+
+# include javascript
+page.includeJSFooterlibs {
+    main = EXT:site_template/Resources/Public/Javascript/main.js
+    main.excludeFromConcatenation = 1
+}
+
+config {
+    contentObjectExceptionHandler = 0
+}
+
+## template parser
+page.10.templateName >
+page.10.templateName = TEXT
+page.10.templateName {
+    data = levelfield:-2,backend_layout_next_level,slide
+    override.field = backend_layout
+    split {
+        token = pagets__
+        1.current = 1
+        1.wrap = |
+    }
+
+    case = uppercamelcase
+    if.empty.value = Default
+}
