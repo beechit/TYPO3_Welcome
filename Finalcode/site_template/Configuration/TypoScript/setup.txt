@@ -1,3 +1,7 @@
+# Lib
+<INCLUDE_TYPOSCRIPT: source="DIR:EXT:site_template/Configuration/TypoScript/Lib/">
+
+
 #css stylesheets
 page.includeCSS.all = EXT:site_template/Resources/Public/Css/main.css
 
