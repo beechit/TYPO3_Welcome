@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-04-15T11:28:18Z" product-name="simple_blog">
+		<header/>
+		<body>
+			<trans-unit id="tx_simpleblog_domain_model_blog">
+				<source>Blog</source>
+			</trans-unit>
+			<trans-unit id="tx_simpleblog_domain_model_blog.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_simpleblog_domain_model_blog.blogdate">
+				<source>Blogdate</source>
+			</trans-unit>
+			<trans-unit id="tx_simpleblog_domain_model_blog.teaser">
+				<source>Teaser</source>
+			</trans-unit>
+			<trans-unit id="tx_simpleblog_domain_model_blog.description">
+				<source>Description</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

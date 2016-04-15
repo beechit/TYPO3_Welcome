@@ -1,0 +1,138 @@
+{
+    "modules": [
+        {
+            "config": {
+                "position": [
+                    227,
+                    194
+                ]
+            },
+            "name": "New Model Object",
+            "value": {
+                "actionGroup": {
+                    "_default0_list": true,
+                    "_default1_show": true,
+                    "_default2_new_create": true,
+                    "_default3_edit_update": false,
+                    "_default4_delete": false,
+                    "customActions": [
+
+                    ]
+                },
+                "name": "Blog",
+                "objectsettings": {
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "aggregateRoot": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": "",
+                    "sorting": false,
+                    "type": "Entity",
+                    "uid": "783874215518"
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "title",
+                            "propertyType": "String",
+                            "uid": "579053386535"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "blogdate",
+                            "propertyType": "DateTime",
+                            "uid": "13935515856"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "teaser",
+                            "propertyType": "Text",
+                            "uid": "804405476397"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": true,
+                            "propertyIsRequired": false,
+                            "propertyName": "description",
+                            "propertyType": "RichText",
+                            "uid": "481243012342"
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": [
+
+                    ]
+                }
+            }
+        }
+    ],
+    "properties": {
+        "backendModules": [
+
+        ],
+        "description": "My first TYPO3 extension created af TYPO3camp Venlo",
+        "emConf": {
+            "category": "plugin",
+            "custom_category": "",
+            "dependsOn": "typo3 => 7.6.0-7.6.99\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "skipGenerateDocumentationTemplate": false,
+            "sourceLanguage": "en",
+            "state": "alpha",
+            "targetVersion": "7.6.0-7.6.99",
+            "version": ""
+        },
+        "extensionKey": "simple_blog",
+        "name": "Simple Blog",
+        "originalExtensionKey": "",
+        "originalVendorName": "",
+        "persons": [
+            {
+                "company": "BeechIt",
+                "email": "t3ext@beech.it",
+                "name": "Ruud Silvrants",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "",
+                    "noncacheableActions": "",
+                    "switchableActions": ""
+                },
+                "key": "list",
+                "name": "Listblog"
+            }
+        ],
+        "vendorName": "BeechIt"
+    },
+    "wires": [
+
+    ],
+    "log": {
+        "last_modified": "2016-04-15 11:28",
+        "extension_builder_version": "7.6.0",
+        "be_user": " (1)"
+    }
+}

@@ -592,16 +592,43 @@ After this create a 'New Model Object', in this case the Blog object.
 
 Save your extension and install this in the extension manager.
 
+Because we use a composer based installation we need to add a composer.json file to autoload the classes if you want to require this extension.
+
+    {
+      "name": "beechit/simple-blog",
+      "type": "typo3-cms-extension",
+      "description": "\"Blogname\": blogging ",
+      "license": ["GPL-2.0+"],
+      "require": {
+        "typo3/cms-core": ">=7.5.0,<8.0"
+      },
+      "autoload": {
+        "psr-4": {
+          "BeechIt\\SimpleBlog\\": "Classes"
+        }
+      }
+    }
+    
+**Because this extension is not yet under version control you can not require the extension yet, therefore add the autoloading also the your main composer file as followed:**
+
+    "autoload": {
+        "psr-4": {
+            "BeechIt\\SimpleBlog\\": "web/typo3conf/ext/simple_blog/Classes"
+        }
+    },
+    
+Then invoke the composer command to regenerate the autoload file `composer dump-autoload`.
+
 If you go to the typo3conf/ext you will see the created extension simple_blog. Under the folder Classes/Domain/Model the
 Blog is created with default getters and setters. In here we create a constructor that sets the date on creation of an item.
 The following constructor is created which sets the date::
 
-	/**
-	 * Constructor of a new Blog which automatically sets the date on today
-	 */
-	public function __construct() {
-		$this->date = new \DateTime();
-	}
+    /**
+     * Constructor of a new Blog which automatically sets the date on today
+     */
+    public function __construct() {
+        $this->date = new \DateTime();
+    }
 
 The other thing we need to adjust is that a web user does not have to enter the field. In the folder
 Resources/private/Partials/Blog/FormFields.html the following has to be removed::
