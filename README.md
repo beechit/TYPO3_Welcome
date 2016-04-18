@@ -47,28 +47,30 @@ Visit the website again in the browser and walkthrough the onscreen steps in sho
   - Create your database in phpmyadmin and make sure you database collation is set on 'utf8_general_ci'
   - Enter the credentials
 3. Select your created database
-4. Create user and import data
+4. Create user and provide a sitename
 5. Optionally select a preconfigured website
   - For this workshop we select 'Do nothing, just get me to the Backend' because we install the distribution by composer.
+  - Option select download a distribution will not work in a composer based install!
 
 Installing the TYPO3 introduction package / other extension
 ===========================================================
 
-When visiting your website by the url gives you the error 'Service unavailable (503) - No pages are found on the rootlevel'. This is normal because we don't have installed the introduction package neither we have setup a single page we could view. When selecting the option 'Create a empty page' in step 5 of the configuration a single page should have be shown.
+When visiting your website by the url gives you the error 'Service unavailable (503) - No pages are found on the rootlevel'. This is normal because we don't have installed the introduction package, so there is no page created we could view. When selecting the option 'Create a empty page' in step 5 of the configuration a single page should have be shown.
 The introduction package we are going to install is an TYPO3 extension which we add to our installation. TYPO3 offers a lot of extensions you can see at TYPO3 Extension Repository (TER) at https://typo3.org/extensions/repository/ .
-To install a extension just require the extension in your main composer by the followed command  (installing the introduction package):
+To install a extension just require the extension in your main composer by the followed command. 
+You can run this on the level of the folder that your created during installation. 
+(installing the introduction package):
 
     composer require typo3-ter/introduction
 
-TYPO3 automatically places this extension in the correct extension directory ('web/typo3conf/ext/') were all third party and own extension will be. (When using a NOT composer based installation you can either download the files and place this into this directory OR use the Backend extensionmanager to download an extension from TER)
+TYPO3 automatically places this extension in the correct extension directory ('web/typo3conf/ext/') were all third party and own extensions are located. (When you are installing without composer you can either download the files and place this into this directory OR use the Backend extensionmanager to download an extension from TER)
 
-Last step is to active the extension (in this case the introduction package) in the Backend (BE) extension manager. When you now visit the website you will have you're first TYPO3 website running!
+Last step is to activate the extension (in this case the introduction package) in the Backend (BE) extension manager. When you now visit the website you will have you're first TYPO3 website running!
 
 TYPO3 basics / common practises / structure of your TYPO3 installation
 ======================================================================
 
-Before going to the next section *Personalize the introduction package* it is good to know some basics / common practises /
-structure of your TYPO3 installation.
+Before going to the next section *Personalize the introduction package* it is good to understand some basics / common practises / structure of your TYPO3 installation.
 
 Definition list
 ---------------
@@ -96,35 +98,36 @@ TYPO3 Backend
 
 **FE**
 
-TYPO3 Frontend / your website
+TYPO3 Frontend -> this is your website;)
 
 Structure of the BE
 -------------------
 
 The structure of the BE (after login at (*www.yourwebsite.com/***/typo3**)) is as follows:
 
-1. Available backend modules
-   - The page and list module you are going to use the most to control the content.
-   - The template/extensions/install/configuration is mostly used to configure/control/develop/debug your website
-2. Page tree (only visible in module under the category 'Web')
-   - The different pages and folders/storages containing the content of your website
-3. Content/adjust part
-4. Tools for caching/searching and to adjust user settings
-
 ![TYPO3 Backend structure] (Images/typo3_backend.png)
 
+1. Available backend modules
+   - The page and list module, this are tools you often use to manage content.
+   - The template/extensions/install/configuration is mostly used to configure/control/develop/debug your website.
+2. Page tree (only visible in module under the category 'Web')
+   - Shows the different pages and folders/storages containing the content of your website
+3. The views / content of the modules
+4. Tools for caching/searching and to adjust user settings
 
 Troubleshooting / tips
 ----------------------
 
-Here are a list of common problems I experienced/experiencing during developing in TYPO3 and afterwards you think 'Of course!!'.
+Here is a list of common problems I experienced during development in TYPO3 and are common mistakes.
+
+*IF THINGS DON'T WORK AS EXPECTED:*
 
 * Did you cleared the caches?!! (clear the caches in the top right cache menu)
 * Is my setting really used and not overwritten somewhere?  In other words what is the loaded typoscript setting in the template object browser?
 * Is the typoScript not been overwritten/ is it visible?
 * Is the database up to date with my code (perform an database check in the install tool)
 * Is the extension active / are the dependencies to other extension set in your ext_emconf.php and are those active?
-* To be continued with 'AHA moments'
+* To be continued with *'AHA moments'*
 
 Minimal overview of a website structure in dirs
 -----------------------------------------------
@@ -196,8 +199,8 @@ Commonly used directory structure for an extension
 Personalize the introduction package
 ====================================
 
-Personalizing the website to your own preferences have to be done in your OWN extensions and **NOT!!** in thirds party extensions.
- Modifying those means updating those extensions (as bugfixes) is **HARD** and your code is mixed which is a **very bad situation** to have.
+Personalizing the website to your own preferences should to be done in your OWN extensions and **NOT!!** in thirds party extensions.
+Modifying those means updating those extensions (as bugfixes) is **HARD** and your code is mixed which is a **very bad situation** to have.
 If there are bugs then clone the original repository fix it and notify *or even better provide a patch* to the original builder so that the extension can be updated and other can also have profit of your work.
 
 Create a custom extension to adjust the introduction package:
@@ -218,7 +221,7 @@ If you go to the extension manager in the backend you will see your extension an
 Adjust the logo of the  introduction package
 --------------------------------------------
 
-In the introduction pacakge the logo is made configurable by TypoScript, to adjust this logo and logo properties (height/width/alt) we need to override the constants so that the correct file to our logo is used. If you look into the `constants.txt` of the extension bootstrap package you see the following information :
+In the introduction pacakge the logo is configurable by TypoScript, to adjust the logo and logo properties (height/width/alt) we need to override the constants so that the another file to our logo is used. If you look into the `constants.txt` of the extension bootstrap package you see the following information :
 
     page {
         logo {
@@ -233,9 +236,9 @@ In the introduction pacakge the logo is made configurable by TypoScript, to adju
         }
     }
     
-To override this create your own `setup.txt` (for later use) and `constants.txt` (see extension dir structure which directory). Copy those contents as above in the constants.txt and modify the file to the path to your own logo in the site_template extension. For example : `file = EXT:site_template/Resources/Public/Images/logo.png`. The `EXT:site_template` directs to your extension directory.
+To override and create your own `setup.txt` (for later use) and `constants.txt` (see extension dir structure which directory). Copy the content as above to the constants.txt and modify the logo constant to the location to your own logo in the site_template extension. For example : `file = EXT:site_template/Resources/Public/Images/logo.png`. The `EXT:site_template` directs to your extension directory.
 
-The TypoScript then needs to be included in your website. This needs a certain order otherwise because we want to override the bootstrap_package constants and not let the bootstrap constants override ours. Therefore we first need to mention it as an *static template* by adding the following lines to `ext_tables.php` . 
+Include this piece TypoScript in your website. This needs a certain order otherwise because the new logo setting has to override setting in the bootstrap_package constants and not let the bootstrap constants override ours. Therefore we first need to mention it as an *static template* by adding the following lines to `ext_tables.php` . 
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         $_EXTKEY,
@@ -243,52 +246,52 @@ The TypoScript then needs to be included in your website. This needs a certain o
         'Site template (after bootstrap package)'
     );
 
-After this we can include this *static template* to our website by: the following steps
+After this we can include this *static template* to our website with the following steps
  
 - In the BE select Template module (BE structure 1)
 - Select rootpage in the pageTree (Be structure 2)
 - Select Info/modify (be structure 3 top left)
 - Go to 'Edit the whole template record'
 - Include your static in the tab 'includes'
-- Adjust order that the site_template comes **after** bootstrap_package
+- Adjust the order so that the site_template comes **after** bootstrap_package
 - Save changes
 - Clear cache
 
 **In the 'info/modify' -> 'Edit the whole template record' TypoScript could be overwritten in the fields 'settings' or 'constants'.
-The values can be deleted because we are going to set this in our site_template.**
+The values here can be deleted because we are going to set this in our site_template.**
 
 (another way to navigate to the 'Edit the whole template record is: List Module -> Select rootpage -> edit Template)
 
-The website logo should have been updated now.
+The website logo should be updated now.
 
 ####Verify correct override of the TypoScript constant
 
 When you navigate to the Template module, select your root page in the pagetree (BE structure 2) and go to the Select option
-'TypoScript Object browser' you can check under constants which settings are used.
+'TypoScript Object browser' you can check under constants which are the settings are are used.
 
 Adjust the colors/css
 ---------------------
 
-The default color scheme / css styling is perhaps not as desired. To adjust this in TYPO3 you can add your own css styles.
+The default color scheme / css styling is perhaps not the right color for your website. To adjust this in TYPO3 you can add your own css styles.
 
-First step is to create an css file to adjust the color of the menu bar to the economical green color. This file is called
+To do this then the first step is to create an css file to adjust the color of the menu bar to the economical green color. This file is called
 main.css and is located at Resources/Public/Css. Content of this file to change the menubar to gray is:
 
 	.navbar {
-		background-color: green;
+		background-color: gray;
 	}
 
-Second step is to configure/setup TYPO3 to include this file at every page. In the created `setup.txt` file you have to
+Second step is to configure or setup TYPO3 to include this file at every page. In the created `setup.txt` file you have to
  add the following line to include your main.css file.
 
 	page.includeCSS.all = EXT:site_template/Resources/Public/Css/main.css
 
-After clearing the cache, your menu bar has an economical greenish background color.
+After clearing the cache, your menu bar has a gray background color.
 
 Add javascript
 --------------
 
-Adding javascript is almost similar as adjusting the color/css. You need to configure a typoscript setting to inform TYPO3 were to find your javascript and then add the javascript (`Resources/Public/Javascript/main.js`) file.
+Adding javascript is similar as adjusting the color/css. You need to configure a typoscript setting to inform TYPO3 where to find your javascript files and then add the javascript (`Resources/Public/Javascript/main.js`) file.
 
     # include javascript
     page.includeJSFooterlibs {
@@ -327,7 +330,7 @@ In very short TYPO3 uses the following three parts
 * Layouts
 * Partials
 
-Currently adjusting the templates of the bootstrap_package is already prepared by the bootstrap_package to define constants were TYPO3 can look for templates, if no templates are found matching the template name it fall backs to the default template(s) of the bootstrap_package. The following constants can be added to your `constants.txt` to provide the directory TYPO3 needs to look in our site_template.
+Currently adjusting the templates of the bootstrap_package is already prepared by the bootstrap_package to define constants were TYPO3 can look for templates, if no templates are found matching the template name it fall backs to the default template(s) of the bootstrap_package. The following constants can be added to your `constants.txt` to provide the directory TYPO3 needs to look for our site_template.
 
     page {
         fluidtemplate {
@@ -340,11 +343,11 @@ Currently adjusting the templates of the bootstrap_package is already prepared b
     	}
     }
 
-After this you can copy one of the templates of the bootstrap_package to your own directories and modify the content.
+You can copy one of the templates of the bootstrap_package to your own directories and modify the content.
 
 **Trouble shooting** 
 
-* Template file name identical to bootstrap_package?
+* Is your template filename identical to bootstrap_package?
 * Correct paths?
 * Cache flushed?
 * TypoScript constants not overwritten (see Template object browser)?
@@ -354,9 +357,9 @@ Create own templates
 
 *Requirements: The constants of the fluidtemplate are set in section 'adjust templates'*
 
-Creating own templates need a BE configuration for the editor to have a visual overview were the content will be placed in the FE. The configuration of these template will be separated in different files to avoid a very large file and losing structure. Therefore first create a folder (e.g.`Configuration/BackendLayouts/`) which is going to contain a different file for every template you are going to create.
+Creating own templates needs a BE configuration for the editor to create a visual overview were the content will be placed in the FE. The configuration of these template will be separated in different files to avoid a very large files and losing structure and readability. Therefore first create a folder (e.g.`Configuration/BackendLayouts/`). This folder will contain different files for every template you are going to create.
 
-Create a file `Configuration/TsConfig/Page/config.ts` which tells TYPO3 to include and read every file in the created directories (in the future this file will also include others files as well and it is your 'startpoint' to your page TsConfig).
+Create a file `Configuration/TsConfig/Page/config.ts` which tells TYPO3 to include and read every file in the created directory (in the future this file will also list other includes as well and it is your 'startpoint' to your page TsConfig).
 
 The following configuration should inform TYPO3 to include all files in the created BackendLayouts directory:
 
@@ -366,14 +369,15 @@ Or if just wanting to include one file:
 
     <INCLUDE_TYPOSCRIPT: source="FILE:EXT:site_template/Configuration/BackendLayouts/mytemplate.ts">
     
-Tell TYPO3 to automatically load the  created `Configuration/TsConfig/Page/config.ts` (which implicit loads the 'BackendLayouts' again) by adding the following into `ext_tables.php`.
+Tell TYPO3 to automatically load the created `Configuration/TsConfig/Page/config.ts` (which tells TYPO3 to loads the 'BackendLayouts') by adding the following into `ext_tables.php`.
 
     // Add page TSConfig
     $pageTsConfig = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl(
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TsConfig/Page/config.ts');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig($pageTsConfig);
     
-The configuration will now been read by TYPO3, so it's time to add the BE-layout of the template. The BE-layout you are going to create is a very simple homepage template (your web_layout) containing three rows with different columns. The template file `homepage.ts` configuration will look like the following:
+The configuration will now been read by TYPO3, so it's time to add the BE-layout of the template. 
+The BE-layout you are about to create is a very simple homepage template (your web_layout) containing three rows with different columns. The template file `homepage.ts` configuration will look like this:
 
     mod {
         web_layout {
@@ -427,9 +431,10 @@ The configuration will now been read by TYPO3, so it's time to add the BE-layout
      
 *The third row you should be able to create yourself (tip: update the max rows number)*
 
-Using this BE-layout (don't forget clearing the cache) can be done by editing a page and adjusting the field `Backend Layout (this page only)` to your homepage (The mentioned title in the configuration). If you want to perform this recursively for the subpages also set the field `Backend Layout (subpages of this page)`).
+Using this BE-layout (don't forget clearing the cache) is done by editing a page and adjusting the field `Backend Layout (this page only)` to your homepage (The mentioned title in the configuration). If you want to perform this recursively for the subpages also set the field `Backend Layout (subpages of this page)`).
  
-When going to the page module you see the created rows and columns you configured and you can place in here the desired content. Next step is to override the bootstrap_package template definition to automatically load your 'MyHomepage' html template. *The bootstrap_package currently only accepts the templates it defined in the setup.txt, and it is desired to load this dynamically*.
+When you open the page module you will see the created rows and columns that you configured.
+Here you can add the desired content. Next step is to override the bootstrap_package template definition to load your 'MyHomepage' html template. *The bootstrap_package currently only accepts the templates it defined in the setup.txt, and it is would be desirable to load this dynamically*.
 Therefore you need this configuration in your `setup.txt` (OR create a file 'parser.ts' and load this file in your setup.txt as defined before). 
 
     # This shows optional development errors
@@ -452,10 +457,12 @@ Therefore you need this configuration in your `setup.txt` (OR create a file 'par
         if.empty.value = Default
     }
 
-You can now visit the website but this will result in a 'Template not found exception'. The template file isn't created yet and you are going to create now with your own HTML markup. *TIP In the exception TYPO3 already mentions in which directories he searched for the expected file*. If it is correct he searches for the file `web/typo3conf/ext/site_template/Resources/Private/Templates/Myhomepage.html`.
-So create this file in the correct directory and place some html into this and revisit the website. 
+If you visit the website (FE) this will show a 'Template not found exception'. This is because the template file isn't created yet. Next is creating your own with your HTML markup. *TIP In the exception TYPO3 already mentions in which directories he searched for the expected file*. If it is correct he searches for the file `web/typo3conf/ext/site_template/Resources/Private/Templates/Myhomepage.html`.
+So create this file in the correct directory and place some html into this file and reload your website. 
 
-The page is empty, right? This comes because no layout is specified. If you wrap the content of your page to the default layout of the bootstrap package is used. The section 'Main' is used in the layout 'Default' to render that part in the layout.
+The page is empty, right? This is because no layout has been specified. 
+You have to wrap the content of your page to the default layout that the page should be using.
+You can do this by using a layout form the bootstrap package. Here the section 'Main' is rendered in the layout 'Default' to render that part in the layout.
 
     <f:layout name="Default"/>
     <f:section name="Main">
@@ -472,31 +479,30 @@ Were is my content? In your html you need to render the content at the places yo
 
 The full example of the MyHomepage template with bootstrap rows can be found at [Myhomepage.html] (/Files/Myhomepage.html)
 
-*(When not using any on the bootstrap_package be-layouts you can disable them in the extensionmanager -> bootstrap_package settings -> 'Disable BackendLayouts')*
+*(If you are not using any on the bootstrap_package be-layouts you can disable them in the extensionmanager -> bootstrap_package settings -> 'Disable BackendLayouts')*
 
 
 Add news extension to your website
 ==================================
 
-One commonly used functionality of a website is presenting some news/blog/information presented in a list with a detail view.
-In TYPO3 the extension 'news' offers the functionality to present this. In this section it will be explained how to add
-this to your website, and how to adjust the view of this.
+One commonly used functionality of a website is presenting news/blog/information presented in a list with a detail view.
+In TYPO3 the extension 'news' offers this functionality. In this section it is explained how to add
+News to your website, and how to adjust the views.
 
 Installation of news can be done like the introduction package, in short:
 
 * Run composer require `composer require typo3-ter/news`
 * Activate the extension in the extensionmanager module
 
-When the extension is installed a plugin can be added to a certain page to show all news records of a storage.
-The storage can be the page were the plugin is listed, but it is *recommended* to use a folder/storage to keep your website
-a structured. The setup of news could be done for example by:
+When the extension is installed, a plugin can be added to a page to show all news records of a storage.
+This storage of recoreds can be the page where the plugin is listed, but it is *recommended* to use a folder/storage to keep your website structured. The setup of news could be done for example by:
 
 * Create a new folder/storage in the pagetree
 * Edit the folder and look for the field 'use as a container' and select 'news'.
 * Create a few news items in this folder (List module, add item -> add news)
 * Create two pages in the pagetree  for example 'news' and 'news-detail'
  
-**The detail-view can be hide in the menus because user are redirect from the list-view and accessing this page will result in an error because the page does not know what to show. *(You can hide the detail view in the edit page mode.)***
+**The detail-view can be hide in the menu because users are redirected from the list-view, so accessing this page will result in an error because the page does not know what to show. *(You can hide the detail view in the edit page mode.)***
 
 * Create a plugin on the created news page in the pageview where you want to show the news.
    * Select page module
@@ -512,7 +518,7 @@ a structured. The setup of news could be done for example by:
 Presenting the detail of a news items is done by adding another news plugin to your detail page and configure the
 starting point to the same folder as previous and selecting 'detail-page' in the field 'what to display'.
 
-When visiting the website (cleared the cache / set the page on visible?) you should see your news items.
+When visiting the website (cleared the cache / set the page on visible!) the page shows your news items.
 
 The complete user manual as other information about this extension can be found at:
 http://typo3.org/extensions/repository/view/news
@@ -520,8 +526,8 @@ http://typo3.org/extensions/repository/view/news
 Adjusting the view(s) of the news extension
 -------------------------------------------
 
-After you installed the news extension you probably also want to adjust the view of the news list/ detail-page to your
-needs. To do this a few steps are needed and you can adjust the templates of news in the site_template.
+After installing the news extension you probably also want to adjust the view of the news list/ detail-page to your
+needs. To do this a few steps are needed and you can should ajust(override) the templates of news in your own site_template.
 
 Adjusting the view is own extension is mentioning TYPO3 to first look in your extension to the news templates. If the template is found here this template is used otherwise the template of news is found. (are none of the templates are found you get an exception).
 
@@ -557,13 +563,13 @@ Adjusting the template is now a matter of creating the same file (or copying the
 Create your first custom extension
 ----------------------------------
 
-**The case of the first extension is a simple blog system to create, update, edit, delete blogitem(s) on the website as
+**The example you can use for your first extension is a simple blog system to create, update, edit, delete blogitem(s) on the website as
 well in the backend.
 On the website there should be an overview of al blog items as well an detail view of every item.
 A blog item consists of a title, teaser, date and a message, where the date will be automatically will be set when creating
 the blog item.**
 
-Creating extensions can easily be kick started by the extension builder. The command to install the extension builder is `composer require typo3-ter/extensionbuilder` .The manual of the extension builder can be found at http://docs.typo3.org/typo3cms/extensions/extension_builder/. 
+Creating extensions can easily be kick-started by the extension builder. The command to install the extension builder is `composer require typo3-ter/extensionbuilder` .The manual of the extension builder can be found at http://docs.typo3.org/typo3cms/extensions/extension_builder/. 
 *(Do not forget to activate the extension in the extensionmanager)*
 
 Once you have installed the extensionbuilder we can use the backend module to create our simple_blog extension.
@@ -610,7 +616,7 @@ Because we use a composer based installation we need to add a composer.json file
       }
     }
     
-**Because this extension is not yet under version control you can not require the extension yet, therefore add the autoloading also the your main composer file as followed:**
+**Because this extension is not yet published or in version control you can not require the extension yet. To autoload the classes add autoloading to your main composer file as followed:**
 
     "autoload": {
         "psr-4": {
@@ -631,7 +637,7 @@ The following constructor is created which sets the date::
         $this->date = new \DateTime();
     }
 
-The other thing we need to adjust is that a web user does not have to enter the field. In the folder
+We also need that a web user does not have to enter the field. In the folder
 Resources/private/Partials/Blog/FormFields.html the following has to be removed::
 
 	<label for="date">
@@ -640,17 +646,17 @@ Resources/private/Partials/Blog/FormFields.html the following has to be removed:
 	<f:form.textfield property="date"  value="{blog.date->f:format.date()}" /><br />
 
 
-**The following steps assume that you have already done/read the section about adding the news system, due the fact that some steps are already explained over there.**
+**The next steps assume that you have already finished the section about adding the news system, due the fact that some steps are already explained over in that part.**
 
-If this is all setup you have to create a folder/storage for the blog items and create a page containing your plugin.
+If all is setup you have to create a folder/storage for the blog items and a page containing your plugin (extention).
 
-As different with the news extension in creating a new content element the plugin is under 'General plugin' and after
+As different with the news extension in creating a new content element the extention is under 'General plugins' and after
 this go to the tab 'Plugin' and select your plugin. ('ListBlog' or the name you specified before in the extension builder)
 
 At last enter/find the record of your folder/container and set this in the field 'Record Storage Page'.
 
-When you cleared the caches and visit your website you can see your first blog system. In the backend you can also adjust
-your blog items in your container or add new ones if desired.
+After clearing the caches and a reloado of your website you will see your first blog system.
+If enterthe backend you can also adjust your blog items in the blogstorage or add new ones if desired.
 
 Links and sources
 =================
