@@ -652,7 +652,26 @@ At last enter/find the record of your folder/container and set this in the field
 When you cleared the caches and visit your website you can see your first blog system. In the backend you can also adjust
 your blog items in your container or add new ones if desired.
 
-End result of this workshop
-===========================
+Links and sources
+=================
 
 The final code created in this workshop can be find in the directory [Finalcode] (Finalcode/).
+
+**Official TYPO3 documentation:**
+
+The official documentation of TYPO3 can be found here:
+
+https://docs.typo3.org/
+
+**TYPO3 extbase book**
+
+http://www.amazon.com/TYPO3-Extbase-Modern-Extension-Development/dp/1530534178/ref=sr_1_2?s=books&ie=UTF8&qid=1460974356&sr=1-2
+
+**TYPO3 video instructions:**
+
+https://jweiland.net/video-anleitungen/typo3.html (DE)
+
+**Usefull blogs**
+
+https://usetypo3.com/ (EN)
+http://typo3blogger.de/links-der-woche/#more-10491  (DE) 
