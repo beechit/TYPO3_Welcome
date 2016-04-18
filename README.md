@@ -656,7 +656,7 @@ this go to the tab 'Plugin' and select your plugin. ('ListBlog' or the name you 
 At last enter/find the record of your folder/container and set this in the field 'Record Storage Page'.
 
 After clearing the caches and a reloado of your website you will see your first blog system.
-If enterthe backend you can also adjust your blog items in the blogstorage or add new ones if desired.
+If enter the backend you can also adjust your blog items in the blogstorage or add new ones if desired.
 
 Links and sources
 =================
