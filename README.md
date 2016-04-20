@@ -65,7 +65,7 @@ You can run this on the level of the folder that your created during installatio
 
 TYPO3 automatically places this extension in the correct extension directory ('web/typo3conf/ext/') were all third party and own extensions are located. (When you are installing without composer you can either download the files and place this into this directory OR use the Backend extensionmanager to download an extension from TER)
 
-Last step is to activate the extension (in this case the introduction package) in the Backend (BE) extension manager. When you now visit the website you will have you're first TYPO3 website running!
+Last step is to **activate the extension** (in this case the introduction package) in the Backend (BE) extension manager. When you now visit the website you will have you're first TYPO3 website running!
 
 TYPO3 basics / common practises / structure of your TYPO3 installation
 ======================================================================
