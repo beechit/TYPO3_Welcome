@@ -221,7 +221,7 @@ If you go to the extension manager in the backend you will see your extension an
 Adjust the logo of the  introduction package
 --------------------------------------------
 
-In the introduction pacakge the logo is configurable by TypoScript, to adjust the logo and logo properties (height/width/alt) we need to override the constants so that the another file to our logo is used. If you look into the `constants.txt` of the extension bootstrap package you see the following information :
+In the introduction package the logo is configurable by TypoScript, to adjust the logo and logo properties (height/width/alt) we need to override the constants so that the another file to our logo is used. If you look into the `constants.txt` of the extension bootstrap package you see the following information :
 
     page {
         logo {
@@ -576,7 +576,7 @@ On the website there should be an overview of al blog items as well an detail vi
 A blog item consists of a title, teaser, date and a message, where the date will be automatically will be set when creating
 the blog item.**
 
-Creating extensions can easily be kick-started by the extension builder. The command to install the extension builder is `composer require typo3-ter/extensionbuilder` .The manual of the extension builder can be found at http://docs.typo3.org/typo3cms/extensions/extension_builder/. 
+Creating extensions can easily be kick-started by the extension builder. The command to install the extension builder is `composer require typo3-ter/extension-builder` .The manual of the extension builder can be found at http://docs.typo3.org/typo3cms/extensions/extension_builder/. 
 *(Do not forget to activate the extension in the extensionmanager)*
 
 Once you have installed the extensionbuilder we can use the backend module to create our simple_blog extension.
