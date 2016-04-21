@@ -246,16 +246,23 @@ Include this piece TypoScript in your website. This needs a certain order otherw
         'Site template (after bootstrap package)'
     );
 
-After this we can include this *static template* to our website with the following steps
+After this we can include this *static template* to our website with the following steps.
+
+![Edit the template] (Images/edittemplate.png)
  
-- In the BE select Template module (BE structure 1)
-- Select rootpage in the pageTree (Be structure 2)
-- Select Info/modify (be structure 3 top left)
-- Go to 'Edit the whole template record'
-- Include your static in the tab 'includes'
-- Adjust the order so that the site_template comes **after** bootstrap_package
-- Save changes
-- Clear cache
+1. In the BE select Template module (BE structure 1)
+2. Select rootpage in the pageTree (Be structure 2)
+3. Select Info/modify (be structure 3 top left)
+4. Go to 'Edit the whole template record'
+
+![Include the typoscript] (Images/staticincludes.png)
+
+1. Include your static in the tab 'includes'
+2. Adjust the order so that the site_template comes **after** bootstrap_package
+
+
+1. Save changes
+2. Clear cache
 
 **In the 'info/modify' -> 'Edit the whole template record' TypoScript could be overwritten in the fields 'settings' or 'constants'.
 The values here can be deleted because we are going to set this in our site_template.**
