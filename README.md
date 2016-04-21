@@ -206,7 +206,7 @@ If there are bugs then clone the original repository fix it and notify *or even 
 Create a custom extension to adjust the introduction package:
 -------------------------------------------------------------
 
-The personalization of the website / introduction package will be done in a own TYPO3 extension 'site_template'. The minimal requirements for an own TYPO3 extension are:
+The personalization of the website / introduction package will be done in a *own TYPO3 extension* 'site_template'. Create this extension by the following. *(These are the minimal requirements for an own TYPO3 extension.)*
 
 * Directory with the name of the extension (site_template)
 * ext_emconf.php
@@ -680,4 +680,5 @@ https://jweiland.net/video-anleitungen/typo3.html (DE)
 **Usefull blogs**
 
 https://usetypo3.com/ (EN)
+
 http://typo3blogger.de/links-der-woche/#more-10491  (DE) 
