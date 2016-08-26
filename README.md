@@ -1,4 +1,4 @@
-Welcome to TYPO3 - TYPO3camp Venlo
+Welcome to TYPO3 - introduction package - TYPO3camp Venlo
 ==================================
 
 This repository is used for the workshop 'Introduction building a website TYPO3' at http://www.typo3campvenlo.nl
